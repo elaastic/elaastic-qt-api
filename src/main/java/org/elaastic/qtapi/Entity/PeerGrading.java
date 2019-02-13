@@ -14,7 +14,6 @@ public class PeerGrading {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-
     private Date dateCreated;
     private Date lastUpdated;
 
