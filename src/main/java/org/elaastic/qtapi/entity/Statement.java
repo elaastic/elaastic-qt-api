@@ -1,5 +1,8 @@
 package org.elaastic.qtapi.entity;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -8,7 +11,9 @@ import java.util.Date;
 
 public class Statement {
 
-    // TODO id ??
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     @NotBlank
     private String title;
@@ -19,48 +24,30 @@ public class Statement {
     private String expectedExplanation;
     @NotNull
     private String choiceSpecification;
+    @NotNull
     private QuestionType questionType;
+
     private Statement parentStatement;
 
-    // TODO @Null ??
+
     private Date dateCreated;
     private Date lastUpdated;
 
     @NotNull
     private User owner;
 
-    @Transient
-    ArrayList<FakeExplanation> fakeExplanations;
+    private Attachement attachement;
 
 //    static constraints = {
-//        title blank: false
-//        content blank: false
 //        questionType nullable: false
-//        choiceSpecification nullable: true, validator: { val, obj ->
+//        choiceSpecification validator: { val, obj ->
 //            if ((obj.questionType == QuestionType.MultipleChoice || obj.questionType == QuestionType.ExclusiveChoice)
 //                    && !val) return ['choiceSpecificationMustBeSet']
 //        }
-//        parentStatement nullable: true
-//        expectedExplanation nullable: true
 //    }
 
 //    static transients = ['choiceSpecificationObject', 'fakeExplanations']
 
-    /**
-     * Get the list of fake explanations for this statement
-     * @return the list of fake explanations
-     */
-    ArrayList<FakeExplanation> getFakeExplanations() {
-        return fakeExplanations;
-    }
-
-    // TODO What is a fake axplanation
-    public void addFakeExplanation(FakeExplanation fakeExplanation) {
-        if (fakeExplanations == null) {
-            fakeExplanations = new ArrayList<FakeInteraction>();
-        }
-        fakeExplanations.add(fakeExplanation);
-    }
 
     // TODO what is this ? and this type
     /**
@@ -73,15 +60,6 @@ public class Statement {
             res = new ChoiceSpecification(choiceSpecification);
         }
         return res;
-    }
-
-
-    /**
-     *
-     * @return true if statement describes a choice question
-     */
-    boolean hasChoices() {
-        return questionType == QuestionType.ExclusiveChoice || questionType == QuestionType.MultipleChoice;
     }
 
     /**
@@ -113,10 +91,7 @@ public class Statement {
      * @return the attachment
      */
     public Attachement getAttachment() {
-        if (id == null) {
-            return null;
-        }
-        Attachement.findByStatement(this); // TODO add list of attachement for Statement
+        return attachement;
     }
 }
 
