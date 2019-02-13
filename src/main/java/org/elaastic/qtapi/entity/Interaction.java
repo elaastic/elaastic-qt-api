@@ -183,7 +183,7 @@ class Interaction {
     boolean hasResponseForUser(User user, int attempt = 1) {
         InteractionResponse.countByInteractionAndLearnerAndAttempt(this, user, attempt) > 0
     }
-//
+
 //    /**
 //     * Get the response for the given user
 //     * @param user the user
@@ -219,115 +219,6 @@ class Interaction {
         res
     }
 
-    /**
-     * return the state of the current interaction for the given learner
-     * @param user the learner
-     * @return the state of the current interaction for the given learner
-     */
-    String stateForLearner(User user) {
-        String state = this.state;
-
-        if(this.sequence.isStopped()) {
-            if(this.isRead() && sequence.resultsArePublished) {
-                return StateType.show.toString();
-            }
-            else if(this.rank <= this.sequence.activeInteraction.rank) {
-                return StateType.afterStop.toString();
-            }
-            else {
-                return StateType.beforeStart.toString();
-            }
-        }
-
-        if (sequence.executionIsBlendedOrDistance() && !sequence.isStopped()) {
-            if (this == sequence.activeInteractionForLearner(user)) {
-
-                if(this.isRead() && this.sequence.resultsArePublished) {
-                    return StateType.show.toString();
-                }
-
-                if (sequence.executionIsBlended() && this.isRead()) {
-                    state = this.state;
-                } else {
-                    state = StateType.show.toString();
-                }
-            } else {
-                state = StateType.afterStop.toString();
-            }
-        }
-        return state;
-    }
-
-    /**
-     * return the state of the current interaction for the given teacher
-     * @param user the teacher
-     * @return the state of the current interaction for the given teacher
-     */
-    String stateForTeacher(User user) {
-        String state = this.state
-        if (sequence.executionIsBlendedOrDistance()) {
-            state = StateType.afterStop.name()
-        }
-        if (sequence.executionIsBlended() && isRead()) {
-            state = this.state
-        }
-        state
-    }
-
-    String stateForRegisteredUsers() {
-        if(this.isRead() && this.sequence.resultsArePublished) {
-            return StateType.show.name()
-        }
-
-        if(this.sequence.isStopped()) {
-            if(this.rank <= this.sequence.activeInteraction.rank) {
-                return StateType.afterStop
-            }
-            else {
-                return StateType.beforeStart
-            }
-        }
-
-        if (sequence.executionIsFaceToFace()) {
-            return this.state
-        } else if (isRead()) {
-            if (sequence.executionIsBlended()) {
-                return this.state
-            } else if (sequence.executionIsDistance()) {
-                return StateType.afterStop
-            }
-        } else { // ResponseSubmission or Evaluation for distance & blended
-            return StateType.show
-        }
-    }
-
-    ResponseRecommendationService responseRecommendationService;
-
-
-//    private void updateExplanationRecommendationMapping(Integer attempt = 1) {
-//        def responses = InteractionResponse.findAllByInteractionAndAttempt(this, attempt)
-//        if (responses) {
-//            def mapping
-//            if (sequence.statement.hasChoices()) {
-//                mapping = responseRecommendationService.getRecommendedResponseIdByResponseId(responses)
-//            } else {
-//                int recommendationCount = sequence.evaluationSpecification.responseToEvaluateCount
-//                mapping = responseRecommendationService.getRecommendedResponseIdByResponseIdForOpenQuestion(responses, recommendationCount)
-//            }
-//            explanationRecommendationMapping = JsonOutput.toJson(mapping)
-//        }
-//    }
-
-    InteractionResultListService interactionResultListService;
-
-//    private void updateResults(Integer attempt = 1) {
-//        def responses = InteractionResponse.findAllByInteractionAndAttempt(this, attempt)
-//        if (responses) {
-//            def resList = interactionResultListService.buildResultListForInteractionAndResponses(this, responses)
-//            def resMap = resultsByAttempt() + [(attempt.toString()): resList]
-//            results = JsonOutput.toJson(resMap)
-//        }
-//    }
 
 
 }
