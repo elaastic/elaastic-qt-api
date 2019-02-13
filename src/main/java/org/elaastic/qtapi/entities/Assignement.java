@@ -1,52 +1,51 @@
 package org.elaastic.qtapi.entities;
 
+import org.springframework.lang.Nullable;
+
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
+
 public class Assignement {
 
-        String title
-        User owner
+        @NotBlank
+        private String title;
+        private User owner;
 
-        Date dateCreated
-        Date lastUpdated
-
-        String globalId
-
-        static constraints = {
-            title blank: false
-            globalId nullable: true
-        }
+        private Date dateCreated;
+        private Date lastUpdated;
+        @Nullable
+        private String globalId;
 
         /**
          * Get the sequences
          * @return the sequences
          */
-        List<Sequence> getSequences() {
-            Sequence.findAllByAssignment(this,[sort:'rank', order:'asc'])
-        }
+//        public List<Sequence> getSequences() {
+//            return Sequence.findAllByAssignment(this,[sort:'rank', order:'asc'])
+//        }
 
-        Integer countSequences() {
-            Sequence.countByAssignment(this)
+        public Integer countSequences() {
+            return Sequence.countByAssignment(this);
         }
 
         /**
          * Get the last sequence of the current assignment
          * @return
          */
-        Sequence getLastSequence() {
-            def res = null
+        public Sequence getLastSequence() {
+            Sequence res = null;
             if (sequences) {
-                res = sequences.last()
+                res = sequences.last();
             }
-            res
+            return res;
         }
-
-        static transients = ['sequences', 'lastSequence']
 
         /**
          * Count the number of registered users
          * @return the count
          */
-        Integer registeredUserCount() {
-            LearnerAssignment.countByAssignment(this)
+        public Integer registeredUserCount() {
+            return LearnerAssignment.countByAssignment(this);
         }
     }
 

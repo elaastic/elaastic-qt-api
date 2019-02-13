@@ -1,17 +1,17 @@
 package org.elaastic.qtapi.entities;
 
 import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.lang.Nullable;
 
-import javax.management.relation.Role;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import javax.validation.constraints.Size;
 
-import static java.util.stream.Collectors.toSet;
 
+@Entity
 public class User {
 
     //private transient springSecurityService;
@@ -21,10 +21,13 @@ public class User {
     @NotBlank
     private String lastName;
     private String username;
-    @NotBlank @UniqueElements @Pattern("/^[a-zA-Z0-9_\-]{1,15}$/")
+    @NotBlank @UniqueElements @Pattern(regexp = "^[a-zA-Z0-9_-]{1,15}$")
     private String normalizedUsername;
+    @Email @UniqueElements @Nullable
     private String email;
+    @NotBlank @Size(min = 4)
     private String password;
+    @Transient
     private String fullname;
     private boolean enabled;
     private boolean accountExpired;
@@ -32,31 +35,11 @@ public class User {
     private boolean passwordExpired;
 
     private boolean canBeUserOwner = false;
+    @Nullable
     private User owner;
     private String clearPassword;
 
     //private Settings[] hasOne;
-
-    static constraints = {
-        firstName blank: false
-        lastName blank: false
-        normalizedUsername blank: false, unique: true, validator: { val ->
-                (val ==~ /^[a-zA-Z0-9_\-]{1,15}$/) ?: 'user.normalizedUsername.invalid'
-        }
-        password blank: false, minSize: 4
-        owner nullable: true
-        email email: true, unique: true, nullable: true, validator: { targetEmail, obj ->
-                targetEmail || obj.owner
-        }
-        settings nullable: true
-    }
-
-    static mapping = {
-        password column: '`password`'
-        version(true)
-    }
-
-    static transients = ['fullname', 'isTeacher', 'isLearner', "clearPassword"]
 
     public String getFullname() {
         return firstName + " " + lastName;
