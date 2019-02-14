@@ -1,14 +1,12 @@
 package org.elaastic.qtapi.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 
+@Entity
 public class Statement {
 
     @Id
@@ -38,60 +36,129 @@ public class Statement {
 
     private Attachement attachement;
 
-//    static constraints = {
-//        questionType nullable: false
-//        choiceSpecification validator: { val, obj ->
-//            if ((obj.questionType == QuestionType.MultipleChoice || obj.questionType == QuestionType.ExclusiveChoice)
-//                    && !val) return ['choiceSpecificationMustBeSet']
-//        }
-//    }
-
-//    static transients = ['choiceSpecificationObject', 'fakeExplanations']
-
-
-    // TODO what is this ? and this type
     /**
      * Get the choice specification object
+     *
      * @return the choice specification
      */
-    ChoiceSpecification getChoiceSpecificationObject() {
-        def res = null
-        if (choiceSpecification) {
+    public ChoiceSpecification getChoiceSpecificationObject() {
+        ChoiceSpecification res = null;
+        if (choiceSpecification == null) {
             res = new ChoiceSpecification(choiceSpecification);
         }
         return res;
     }
 
     /**
-     *
      * @return true if statement describes an open-ended question
      */
     boolean isOpenEnded() {
+
         return questionType == QuestionType.OpenEnded;
     }
 
     /**
-     *
      * @return true if statement describes a multiple choice question
      */
     boolean isMultipleChoice() {
+
         return questionType == QuestionType.MultipleChoice;
     }
 
     /**
-     *
      * @return true if statement describes an exclusive choice question
      */
     boolean isExclusiveChoice() {
+
         return questionType == QuestionType.ExclusiveChoice;
     }
 
-    /**
-     * Get the attachment
-     * @return the attachment
-     */
-    public Attachement getAttachment() {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getExpectedExplanation() {
+        return expectedExplanation;
+    }
+
+    public void setExpectedExplanation(String expectedExplanation) {
+        this.expectedExplanation = expectedExplanation;
+    }
+
+    public String getChoiceSpecification() {
+        return choiceSpecification;
+    }
+
+    public void setChoiceSpecification(String choiceSpecification) {
+        this.choiceSpecification = choiceSpecification;
+    }
+
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
+    }
+
+    public Statement getParentStatement() {
+        return parentStatement;
+    }
+
+    public void setParentStatement(Statement parentStatement) {
+        this.parentStatement = parentStatement;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public Attachement getAttachement() {
         return attachement;
+    }
+
+    public void setAttachement(Attachement attachement) {
+        this.attachement = attachement;
     }
 }
 
