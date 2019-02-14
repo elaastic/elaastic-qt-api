@@ -1,0 +1,87 @@
+package org.elaastic.qtapi.entities;
+
+import org.springframework.lang.Nullable;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+
+public class Assignement {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @NotBlank
+    private String title;
+    @NotNull
+    private User owner;
+    @NotNull
+    private Date dateCreated;
+    @NotNull
+    private Date lastUpdated;
+    private String globalId;
+
+    /**
+     * Get the sequences
+     *
+     * @return the sequences
+     */
+    public List<Sequence> getSequences() {
+        return Sequence.findAllByAssignment(this, 'rank', 'asc');
+    }
+
+    public int countSequences() {
+        return Sequence.countByAssignment(this);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public String getGlobalId() {
+        return globalId;
+    }
+
+    public void setGlobalId(String globalId) {
+        this.globalId = globalId;
+    }
+}
