@@ -48,7 +48,7 @@ class Interaction {
      */
     Map<String, List<Long>> explanationRecommendationMap() {
         if (!explanationRecommendationMapping) {
-            return [:]
+            return [:];
         }
         JsonSlurper jsonSlurper = new JsonSlurper();
         def res = jsonSlurper.parseText(explanationRecommendationMapping);
