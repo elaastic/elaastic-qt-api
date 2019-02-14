@@ -1,12 +1,11 @@
 package org.elaastic.qtapi.entities;
 
-import org.springframework.lang.Nullable;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Assignement {
@@ -29,7 +28,7 @@ public class Assignement {
      *
      * @return the sequences
      */
-    public List<Sequence> getSequences() {
+    public ArrayList<Sequence> getSequences() {
         return Sequence.findAllByAssignment(this, 'rank', 'asc');
     }
 

@@ -1,4 +1,4 @@
-package org.elaastic.qtapi.entity;
+package org.elaastic.qtapi.entities;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
