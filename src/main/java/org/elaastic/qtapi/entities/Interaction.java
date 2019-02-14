@@ -52,7 +52,7 @@ class Interaction {
      * @return the explanation recommendation map
      */
     HashMap<String, ArrayList<Long>> explanationRecommendationMap() {
-        if (!explanationRecommendationMapping) {
+        if (explanationRecommendationMapping != null) {
             return new HashMap<>();
         }
         JsonSlurper jsonSlurper = new JsonSlurper();
