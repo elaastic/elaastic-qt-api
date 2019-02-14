@@ -3,89 +3,114 @@ package org.elaastic.qtapi.entities;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.Entity;
-import javax.persistence.Transient;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 
 @Entity
 public class User {
 
-    //private transient springSecurityService;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     @NotBlank
     private String firstName;
     @NotBlank
     private String lastName;
+    @NotNull
     private String username;
-    @NotBlank @UniqueElements @Pattern(regexp = "^[a-zA-Z0-9_-]{1,15}$")
+    @NotBlank
+    @UniqueElements
+    @Pattern(regexp = "^[a-zA-Z0-9_-]{1,15}$")
     private String normalizedUsername;
-    @Email @UniqueElements @Nullable
+    @Email
+    @UniqueElements
     private String email;
-    @NotBlank @Size(min = 4)
+    @NotBlank
+    @Size(min = 4)
     private String password;
-    @Transient
-    private String fullname;
-    private boolean enabled;
-    private boolean accountExpired;
-    private boolean accountLocked;
-    private boolean passwordExpired;
-
+    @NotNull
     private boolean canBeUserOwner = false;
-    @Nullable
+    @NotNull
     private User owner;
-    private String clearPassword;
-
-    //private Settings[] hasOne;
 
     public String getFullname() {
         return firstName + " " + lastName;
     }
 
     public String toString() {
+        return getFullname();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUsername() {
         return username;
     }
 
-    /**
-     *
-     * @return true if the user is a learner
-     */
-    public boolean isLearner() {
-        return UserRole.get(this.id, RoleEnum.STUDENT_ROLE.id);
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    /**
-     *
-     * @return true if the user is teacher
-     */
-    public boolean isTeacher() {
-        return UserRole.get(this.id, RoleEnum.TEACHER_ROLE.id);
+    public String getNormalizedUsername() {
+        return normalizedUsername;
     }
 
-    /**
-     *
-     * @return true if the user is admin
-     */
-    public boolean isAdmin() {
-        return UserRole.get(this.id, RoleEnum.ADMIN_ROLE.id);
+    public void setNormalizedUsername(String normalizedUsername) {
+        this.normalizedUsername = normalizedUsername;
     }
 
-    /**
-     * Check if a user is registered in an assignment
-     * @param assignment the assignment
-     * @return true if the user is registered in the given assignment
-     */
-    public boolean isRegisteredInAssignment(Assignement assignment) {
-        return LearnerAssignment.findByLearnerAndAssignment(this,assignment);
+    public String getEmail() {
+        return email;
     }
 
-//    public Set<Role> getAuthorities() {
-//        Set<Role> res = UserRole.findAllByUser(this).map(Role::).collect(Collectors.toCollection(TreeSet::new));
-//                .collect(toSet(), );
-//        res*.roleName
-//                res
-//    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isCanBeUserOwner() {
+        return canBeUserOwner;
+    }
+
+    public void setCanBeUserOwner(boolean canBeUserOwner) {
+        this.canBeUserOwner = canBeUserOwner;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 }
