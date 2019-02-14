@@ -1,9 +1,8 @@
-package org.elaastic.qtapi.entity;
+package org.elaastic.qtapi.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Date;
 
 @Entity

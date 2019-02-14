@@ -6,7 +6,6 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-
 @Entity
 public class User {
 

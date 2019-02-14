@@ -1,11 +1,16 @@
 package org.elaastic.qtapi.entities;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+@Entity
 class Interaction {
 
     public static final String EMPTY_SPECIFICATION = "empty";
@@ -46,12 +51,12 @@ class Interaction {
      *
      * @return the explanation recommendation map
      */
-    Map<String, List<Long>> explanationRecommendationMap() {
+    HashMap<String, ArrayList<Long>> explanationRecommendationMap() {
         if (!explanationRecommendationMapping) {
-            return [:];
+            return new HashMap<>();
         }
         JsonSlurper jsonSlurper = new JsonSlurper();
-        def res = jsonSlurper.parseText(explanationRecommendationMapping);
+        HashMap<String, ArrayList<Long>> res = jsonSlurper.parseText(explanationRecommendationMapping);
         return res;
     }
 
