@@ -32,9 +32,9 @@ class Interaction {
     @NotNull
     private User owner;
     @NotNull
-    private Sequence sequence; // TODO need to be in InteractionType enum
+    private Sequence sequence;
     @NotNull
-    private String state; // TODO need to be in StateType enum
+    private String state;
 
     private String results; // Can be null
     private String explanationRecommendationMapping; // Can be null
@@ -47,18 +47,18 @@ class Interaction {
         return interactionType == InteractionType.Read.toString();
     }
 
-    /** // TODO ask if it's the good methode to get top responses
-     *
-     * @return the explanation recommendation map
-     */
-    HashMap<String, ArrayList<Long>> explanationRecommendationMap() {
-        if (explanationRecommendationMapping != null) {
-            return new HashMap<>();
-        }
-        JsonSlurper jsonSlurper = new JsonSlurper();
-        HashMap<String, ArrayList<Long>> res = jsonSlurper.parseText(explanationRecommendationMapping);
-        return res;
-    }
+//    /** // TODO ask if it's the good methode to get top responses
+//     *
+//     * @return the explanation recommendation map
+//     */
+//    HashMap<String, ArrayList<Long>> explanationRecommendationMap() {
+//        if (explanationRecommendationMapping != null) {
+//            return new HashMap<>();
+//        }
+//        JsonSlurper jsonSlurper = new JsonSlurper();
+//        HashMap<String, ArrayList<Long>> res = jsonSlurper.parseText(explanationRecommendationMapping);
+//        return res;
+//    }
 
     public static String getEmptySpecification() {
         return EMPTY_SPECIFICATION;
