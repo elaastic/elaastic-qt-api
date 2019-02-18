@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
-public class Assignement {
+public class Assignment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,19 +24,6 @@ public class Assignement {
     @NotNull
     private Date lastUpdated;
     private String globalId;
-
-    /**
-     * Get the sequences
-     *
-     * @return the sequences
-     */
-    public ArrayList<Sequence> getSequences() {
-        return Sequence.findAllByAssignment(this, 'rank', 'asc');
-    }
-
-    public int countSequences() {
-        return Sequence.countByAssignment(this);
-    }
 
     public long getId() {
         return id;

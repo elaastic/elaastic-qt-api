@@ -1,17 +1,23 @@
 package org.elaastic.qtapi.entities;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-class Interaction {
+public class Interaction {
 
     public static final String EMPTY_SPECIFICATION = "empty";
 
@@ -51,13 +57,27 @@ class Interaction {
      *
      * @return the explanation recommendation map
      */
-    HashMap<String, ArrayList<Long>> explanationRecommendationMap() {
-        if (!explanationRecommendationMapping) {
+    public Map<String, ArrayList<Long>> explanationRecommendationMap() {
+        if (explanationRecommendationMapping == null) {
             return new HashMap<>();
+        } else {
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, ArrayList<Long>> res = new HashMap<String, ArrayList<Long>>();
+
+            try {
+                //JsonSlurper jsonSlurper = new JsonSlurper();
+                res = mapper.readValue(explanationRecommendationMapping, new TypeReference<Map<String,  ArrayList<Long>>>(){});
+
+            } catch (JsonGenerationException e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return res;
         }
-        JsonSlurper jsonSlurper = new JsonSlurper();
-        HashMap<String, ArrayList<Long>> res = jsonSlurper.parseText(explanationRecommendationMapping);
-        return res;
     }
 
     public static String getEmptySpecification() {
