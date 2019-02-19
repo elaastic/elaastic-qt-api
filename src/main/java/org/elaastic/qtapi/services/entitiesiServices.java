@@ -2,7 +2,6 @@ package org.elaastic.qtapi.services;
 
 import org.elaastic.qtapi.entities.*;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
