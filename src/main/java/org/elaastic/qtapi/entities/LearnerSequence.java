@@ -1,9 +1,6 @@
 package org.elaastic.qtapi.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -15,13 +12,20 @@ public class LearnerSequence {
     private long id;
 
     @NotNull
+    @ManyToOne
     private User learner;
     @NotNull
+    @ManyToOne
     private Sequence sequence;
     @NotNull
+    @ManyToOne
     private Interaction activeInteraction;
 
+    @NotNull
+    @Column(name="date_created")
     private Date dateCreated;
+    @NotNull
+    @Column(name="last_updated")
     private Date lastUpdated;
 
     public long getId() {

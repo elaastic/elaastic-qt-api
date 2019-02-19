@@ -1,9 +1,6 @@
 package org.elaastic.qtapi.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -14,15 +11,21 @@ public class PeerGrading {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
+    @Column(name="date_created")
     private Date dateCreated;
+    @NotNull
+    @Column(name="last_updated")
     private Date lastUpdated;
 
     private Float grade; // Can be null
     private String annotation; // Can be null
 
     @NotNull
+    @ManyToOne
     private User grader;
     @NotNull
+    @ManyToOne
     private InteractionResponse response;
 
     public long getId() {

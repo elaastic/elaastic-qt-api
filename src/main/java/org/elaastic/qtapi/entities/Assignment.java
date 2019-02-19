@@ -1,9 +1,6 @@
 package org.elaastic.qtapi.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -17,11 +14,15 @@ public class Assignment {
     @NotBlank
     private String title;
     @NotNull
+    @ManyToOne
     private User owner;
     @NotNull
+    @Column(name="date_created")
     private Date dateCreated;
     @NotNull
+    @Column(name="last_updated")
     private Date lastUpdated;
+    @Column(name="global_id")
     private String globalId;
 
     public long getId() {

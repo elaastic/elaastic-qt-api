@@ -1,10 +1,11 @@
 package org.elaastic.qtapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -31,7 +32,11 @@ public class User {
     @NotNull
     private boolean canBeUserOwner = false;
     @NotNull
+    @ManyToOne
     private User owner;
+
+    @OneToMany(mappedBy = "owner")
+    private List<User> owneredUser;
 
     public String getFullname() {
         return firstName + " " + lastName;

@@ -15,26 +15,30 @@ public class Sequence {
     private int rank;
 
     @NotNull
+    @Column(name="date_created")
     private Date dateCreated;
     @NotNull
+    @Column(name="last_updated")
     private Date lastUpdated;
 
     @NotNull
+    @ManyToOne
     private User owner;
     @NotNull
+    @ManyToOne
     private Assignment assignment;
     @NotNull
+    @ManyToOne
     private Statement statement;
 
+    @ManyToOne
     private Interaction activeInteraction;
 
     @NotNull
-    private String state = StateType.beforeStart.toString();
+    private String state;
     @NotNull
-    private Boolean resultsArePublished; // = false;// TODO Question, all question that are publish are good for test ?
-
-    // TODO RQT dans la base pour avoir tout les Interaction lier a la sequence
-
+    @Column(name = "results_are_published")
+    private Boolean resultsArePublished;
     public long getId() {
         return id;
     }

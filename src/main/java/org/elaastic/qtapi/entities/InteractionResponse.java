@@ -22,20 +22,27 @@ class InteractionResponse {
     private long id;
 
     @NotNull
+    @Column(name="date_created")
     private Date dateCreated;
     @NotNull
+    @Column(name="last_updated")
     private Date lastUpdated;
 
     @NotNull
+    @ManyToOne
     private User learner;
     @NotNull
+    @ManyToOne
     private Interaction interaction;
     @NotNull
-    Integer attempt = 1;
+    private int attempt;
 
     private String explanation;
+    @Column(name = "confidence_degree")
     private int confidenceDegree;
+    @Column(name = "mean_grade")
     private float meanGrade;
+    @Column(name = "choice_list_specification")
     private String choiceListSpecification;
     private float score;
 

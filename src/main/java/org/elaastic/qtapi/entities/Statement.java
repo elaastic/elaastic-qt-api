@@ -4,8 +4,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Table(name = "statement")
 public class Statement {
 
     @Id
@@ -18,36 +20,30 @@ public class Statement {
     private String content;
 
     @NotNull
+    @Column(name = "expected_explanation")
     private String expectedExplanation;
     @NotNull
+    @Column(name = "choice_specification")
     private String choiceSpecification;
     @NotNull
     private QuestionType questionType;
 
+    @ManyToOne
     private Statement parentStatement;
 
-
+    @NotNull
+    @Column(name="date_created")
     private Date dateCreated;
+    @NotNull
+    @Column(name="last_updated")
     private Date lastUpdated;
 
     @NotNull
+    @ManyToOne
     private User owner;
 
-    private Attachement attachement;
-
-    /**
-     * Get the choice specification object
-     *
-     * @return the choice specification
-     */
-    public ChoiceSpecification getChoiceSpecificationObject() {
-        ChoiceSpecification res = null;
-        if (choiceSpecification == null) {
-            res = new ChoiceSpecification(choiceSpecification);
-        }
-        return res;
-    }
-
+    @OneToMany(mappedBy = "statement")
+    private List<Attachement> attachements;
     /**
      * @return true if statement describes an open-ended question
      */
@@ -152,13 +148,13 @@ public class Statement {
         this.owner = owner;
     }
 
-    public Attachement getAttachement() {
-        return attachement;
-    }
-
-    public void setAttachement(Attachement attachement) {
-        this.attachement = attachement;
-    }
+//    public Attachement getAttachement() {
+//    return attachement;
+//}
+//
+//    public void setAttachement(Attachement attachement) {
+//        this.attachement = attachement;
+//    }
 }
 
 enum QuestionType {

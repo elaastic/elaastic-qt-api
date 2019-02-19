@@ -5,10 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,21 +25,28 @@ public class Interaction {
     @NotNull
     private String interactionType;
     @NotNull
-    private Integer rank;
+    private int rank;
     @NotNull
     private String specification;
 
+    @NotNull
+    @Column(name="date_created")
     private Date dateCreated;
+    @NotNull
+    @Column(name="last_updated")
     private Date lastUpdated;
 
     @NotNull
+    @ManyToOne
     private User owner;
     @NotNull
+    @ManyToOne
     private Sequence sequence;
     @NotNull
     private String state;
 
     private String results; // Can be null
+    @Column(name = "explanation_recommendation_mapping")
     private String explanationRecommendationMapping; // Can be null
 
     /**
