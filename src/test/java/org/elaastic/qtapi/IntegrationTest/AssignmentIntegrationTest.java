@@ -1,7 +1,5 @@
 package org.elaastic.qtapi.IntegrationTest;
 
-import org.elaastic.qtapi.Services.AssignmentService;
-import org.elaastic.qtapi.entities.Assignment;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
