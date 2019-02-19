@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-class LearnerSequence {
+public class LearnerSequence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
