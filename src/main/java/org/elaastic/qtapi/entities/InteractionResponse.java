@@ -1,8 +1,17 @@
 package org.elaastic.qtapi.entities;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "choice_interaction_response")
@@ -30,24 +39,31 @@ class InteractionResponse {
     private String choiceListSpecification;
     private float score;
 
-//    /**
-//     * Get the choice list
-//     * @return the choice list
-//     */
-//    ArrayList<Integer> choiceList() {
-//        if (choiceListSpecification != null) {
-//            return new ArrayList<>();
-//        }
-//        JsonSlurper jsonSlurper = new JsonSlurper();
-//        return jsonSlurper.parseText(choiceListSpecification);
-//    }
+    /**
+     * Get the choice list
+     * @return the choice list
+     */
+    ArrayList<Integer>choiceList() {
+        if (choiceListSpecification != null) {
+            return new ArrayList<>();
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<Integer> res = new ArrayList<>();
 
-//    /**
-//     * Indicate if the response is a choice response
-//     * @return true
-//     */
-//    boolean isChoiceResponse() {
-//        retrurn interaction.interactionSpecification.hasChoices();
-//    }
+        try {
+            //JsonSlurper jsonSlurper = new JsonSlurper();
+            res = mapper.readValue(choiceListSpecification, new TypeReference<ArrayList<Integer>>(){});
+
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
 }
 
