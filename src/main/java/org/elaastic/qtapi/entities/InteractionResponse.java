@@ -2,7 +2,6 @@ package org.elaastic.qtapi.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -31,24 +30,24 @@ class InteractionResponse {
     private String choiceListSpecification;
     private float score;
 
-    /**
-     * Get the choice list
-     * @return the choice list
-     */
-    ArrayList<Integer> choiceList() {
-        if (choiceListSpecification != null) {
-            return new ArrayList<>();
-        }
-        JsonSlurper jsonSlurper = new JsonSlurper();
-        return jsonSlurper.parseText(choiceListSpecification);
-    }
+//    /**
+//     * Get the choice list
+//     * @return the choice list
+//     */
+//    ArrayList<Integer> choiceList() {
+//        if (choiceListSpecification != null) {
+//            return new ArrayList<>();
+//        }
+//        JsonSlurper jsonSlurper = new JsonSlurper();
+//        return jsonSlurper.parseText(choiceListSpecification);
+//    }
 
-    /**
-     * Indicate if the response is a choice response
-     * @return true
-     */
-    boolean isChoiceResponse() {
-        retrurn interaction.interactionSpecification.hasChoices();
-    }
+//    /**
+//     * Indicate if the response is a choice response
+//     * @return true
+//     */
+//    boolean isChoiceResponse() {
+//        retrurn interaction.interactionSpecification.hasChoices();
+//    }
 }
 
