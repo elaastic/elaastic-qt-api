@@ -28,11 +28,12 @@ public class EntitiesServicesTest {
         // given a a valid Enterprise
         user = new User();
 
+        System.out.println("coucou");
+
     }
 
     @Test
     public void testfindAllAssignments() {
         List<User> fetchProject = entitiesServices.findAllUser();
-        System.out.println(fetchProject);
     }
 }
