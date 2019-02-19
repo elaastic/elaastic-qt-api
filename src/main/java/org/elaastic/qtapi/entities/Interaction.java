@@ -38,9 +38,9 @@ public class Interaction {
     @NotNull
     private User owner;
     @NotNull
-    private Sequence sequence; // TODO need to be in InteractionType enum
+    private Sequence sequence;
     @NotNull
-    private String state; // TODO need to be in StateType enum
+    private String state;
 
     private String results; // Can be null
     private String explanationRecommendationMapping; // Can be null
