@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.List;
 
 @Entity
 public class User {
@@ -25,25 +24,18 @@ public class User {
     private String normalizedUsername;
     @Email
     @UniqueElements
+    @NotNull
     private String email;
     @NotBlank
     @Size(min = 4)
     private String password;
     @NotNull
-    private boolean canBeUserOwner = false;
-    @NotNull
+    private byte canBeUserOwner;
     @ManyToOne
     private User owner;
 
-    @OneToMany(mappedBy = "owner")
-    private List<User> owneredUser;
-
     public String getFullname() {
         return firstName + " " + lastName;
-    }
-
-    public String toString() {
-        return getFullname();
     }
 
     public long getId() {
@@ -103,10 +95,10 @@ public class User {
     }
 
     public boolean isCanBeUserOwner() {
-        return canBeUserOwner;
+        return canBeUserOwner == 1;
     }
 
-    public void setCanBeUserOwner(boolean canBeUserOwner) {
+    public void setCanBeUserOwner(byte canBeUserOwner) {
         this.canBeUserOwner = canBeUserOwner;
     }
 
@@ -116,5 +108,38 @@ public class User {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (getId() != user.getId()) return false;
+        if (isCanBeUserOwner() != user.isCanBeUserOwner()) return false;
+        if (!getFirstName().equals(user.getFirstName())) return false;
+        if (!getLastName().equals(user.getLastName())) return false;
+        if (!getUsername().equals(user.getUsername())) return false;
+        if (!getNormalizedUsername().equals(user.getNormalizedUsername())) return false;
+        if (!getEmail().equals(user.getEmail())) return false;
+        if (!getPassword().equals(user.getPassword())) return false;
+        return getOwner() != null ? getOwner().equals(user.getOwner()) : user.getOwner() == null;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", normalizedUsername='" + normalizedUsername + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", canBeUserOwner=" + canBeUserOwner +
+                ", owner=" + owner +
+                '}';
     }
 }
