@@ -112,16 +112,15 @@ public class EntitiesServicesTest{
         assign1.setLastUpdated(dateLU1);
         assign1.setGlobalId("c71b94b6-ad03-11e7-93a4-00163e3774aa");
 
-        listContainTest(assignments, allAssignement);
+        assert(listContainTest(assignments, allAssignement));
     }
   
     public void testfindAllUser() {
 
         List<User> fetchUser = entitiesServices.findAllUser();
         // Assert that the full name is in the List
-        for (User user : users) {
-            assert(fetchUser.contains(user));
-        }
+
+        assert(listContainTest(users, fetchUser));
 
         // Test list size
         assert(fetchUser.size() == 11);
