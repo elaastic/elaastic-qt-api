@@ -26,7 +26,7 @@ public class EntitiesServicesTest {
     @Before
     public void setUp() {
 
-        users = setUpUser();
+
 
     }
 
@@ -36,7 +36,7 @@ public class EntitiesServicesTest {
      */
     private ArrayList<User> setUpUser() {
 
-        User user1, user2, user3, user4, user5, user6, user7, user8, user9, user10;
+        User user1, user2, user3, user4, user5;
 
         // id, email, first_name, last_name, normalized_username, password, username, owner_id, can_be_user_owner
         ArrayList<User> users = new ArrayList<>();
@@ -49,22 +49,76 @@ public class EntitiesServicesTest {
         user1.setPassword("7110eda4d09e062aa5e4a390b0a572ac0d2c0220");
         user1.setUsername("admin");
         user1.setOwner(null);
-        user1.setCanBeUserOwner(false);
-
+        user1.setCanBeUserOwner((byte)0);
+        // add the user
         users.add(user1);
+
+        user2 = new User();
+        user2.setId(300);
+        user2.setEmail("admin2@tsaap.org");
+        user2.setFirstName("Admin2");
+        user2.setLastName("Tsaap2");
+        user2.setNormalizedUsername("admin2");
+        user2.setPassword("7110eda4d09e062aa5e4a390b0a572ac0d2c0220");
+        user2.setUsername("admin2");
+        user2.setOwner(null);
+        user2.setCanBeUserOwner((byte)1);
+        // add the user
+        users.add(user2);
+
+        user3 = new User();
+        user3.setId(4938);
+        user3.setEmail("John_Doe___1@fakeuser.com");
+        user3.setFirstName("John");
+        user3.setLastName("Doe");
+        user3.setNormalizedUsername("john_doe___1");
+        user3.setPassword("06c129f13e5ec40f6d08f57504d30cf416e6cad9");
+        user3.setUsername("John_Doe___1");
+        user3.setOwner(null);
+        user3.setCanBeUserOwner((byte)0);
+        // add the user
+        users.add(user3);
+
+        user4 = new User();
+        user4.setId(4939);
+        user4.setEmail("John_Doe___2@fakeuser.com");
+        user4.setFirstName("John");
+        user4.setLastName("Doe");
+        user4.setNormalizedUsername("john_doe___2");
+        user4.setPassword("06c129f13e5ec40f6d08f57504d30cf416e6cad9");
+        user4.setUsername("John_Doe___2");
+        user4.setOwner(null);
+        user4.setCanBeUserOwner((byte)0);
+        // add the user
+        users.add(user4);
+
+        user5 = new User();
+        user5.setId(4940);
+        user5.setEmail("John_Doe___3@fakeuser.com");
+        user5.setFirstName("John");
+        user5.setLastName("Doe");
+        user5.setNormalizedUsername("john_doe___3");
+        user5.setPassword("06c129f13e5ec40f6d08f57504d30cf416e6cad9");
+        user5.setUsername("John_Doe___3");
+        user5.setOwner(null);
+        user5.setCanBeUserOwner((byte)0);
+        // add the user
+        users.add(user5);
 
         return users;
     }
 
     @Test
     public void testfindAllUser() {
-        List<User> fetchProject = entitiesServices.findAllUser();
+        users = setUpUser();
 
+        List<User> fetchUser = entitiesServices.findAllUser();
         // Assert that the full name is in the List
         for (User user : users) {
-            System.out.println(user);
-            System.out.println(fetchProject.get(0));
-            assert(fetchProject.contains(user));
+            assert(fetchUser.contains(user));
         }
+
+        // Test list size
+        assert(fetchUser.size() == 11);
     }
 }
