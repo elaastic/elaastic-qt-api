@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Assignment {
@@ -24,6 +25,19 @@ public class Assignment {
     private Date lastUpdated;
     @Column(name="global_id")
     private String globalId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Assignment that = (Assignment) o;
+        return getId() == that.getId() &&
+                getTitle().equals(that.getTitle()) &&
+                getOwner().equals(that.getOwner()) &&
+                getDateCreated().equals(that.getDateCreated()) &&
+                getLastUpdated().equals(that.getLastUpdated()) &&
+                Objects.equals(getGlobalId(), that.getGlobalId());
+    }
 
     public long getId() {
         return id;
