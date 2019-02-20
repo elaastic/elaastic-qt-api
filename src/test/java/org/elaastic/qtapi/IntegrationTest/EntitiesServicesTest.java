@@ -121,4 +121,9 @@ public class EntitiesServicesTest {
         // Test list size
         assert(fetchUser.size() == 11);
     }
+
+    @Test
+    public void findUserByIdTest() {
+
+    }
 }
