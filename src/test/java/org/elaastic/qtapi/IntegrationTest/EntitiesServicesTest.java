@@ -1,6 +1,7 @@
 package org.elaastic.qtapi.IntegrationTest;
 
 import org.elaastic.qtapi.entities.Assignment;
+import org.elaastic.qtapi.entities.Sequence;
 import org.elaastic.qtapi.entities.User;
 import org.elaastic.qtapi.services.EntitiesServices;
 import org.junit.Before;
@@ -29,10 +30,14 @@ public class EntitiesServicesTest{
 
     private ArrayList<Assignment> assignments;
 
+    private ArrayList<Sequence> sequences;
+
     @Before
     public void setUp() {
 
         users = setUpUser();
+        assignments = setUpAssignement();
+        sequences = setUpSequence();
     }
 
     /**
@@ -92,27 +97,32 @@ public class EntitiesServicesTest{
     public void testFindAllAssignement(){
 
         List<Assignment> allAssignement = entitiesServices.findAllAssignments();
-        assignments = new ArrayList<Assignment>();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
-
-        Date dateC1 = null;
-        Date dateLU1 = null;
-        try {
-            dateC1 = formatter.parse("2017-10-09 17:08:59");
-            dateLU1 = formatter.parse("2017-10-12 07:51:36");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Assignment assign1 = new Assignment();
-        assign1.setId(382);
-        assign1.setTitle("EMINL1H1 : Développement collaboratif, qualité: Quizz Git");
-        assign1.setOwner(entitiesServices.findUserById(359));
-        assign1.setDateCreated(dateC1);
-        assign1.setLastUpdated(dateLU1);
-        assign1.setGlobalId("c71b94b6-ad03-11e7-93a4-00163e3774aa");
+        assert(allAssignement.size() == 1);
 
         assert(listContainTest(assignments, allAssignement));
+
+    }
+
+    @Test
+    public void findAssignmentByIdTest() {
+
+        assert(assignments.get(0).equals(entitiesServices.findUserById(assignments.get(0).getId())));
+
+    }
+
+    @Test
+    public void findStatementByIdTest() {
+
+        assert(statements.get(0).equals(entitiesServices.findStatementById(statements.get(0).getId())));
+
+    }
+
+    @Test
+    public void findInteractionByIdTest() {
+
+        assert(interactions.get(0).equals(entitiesServices.findInteractionById(interactions.get(0).getId())));
+
     }
   
     public void testfindAllUser() {
@@ -139,6 +149,106 @@ public class EntitiesServicesTest{
         User fetchUser2 = entitiesServices.findUserById(user2.getId());
 
         assert(user2.equals(fetchUser2));
+    }
+
+    @Test
+    public void testFindAllSequence(){
+
+        List<Sequence> allSequence = entitiesServices.findAllSequence();
+
+        assert(allSequence.size() == 5);
+
+        assert(listContainTest(sequences, allSequence));
+    }
+
+    /**
+     * Initialise a list of Assignement
+     * @return users A list of Assignement
+     */
+    private ArrayList<Assignment> setUpAssignement() {
+
+        ArrayList<Assignment> assignements = new ArrayList<>();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date dateC1 = null;
+        Date dateLU1 = null;
+        try {
+            dateC1 = formatter.parse("2017-10-09 17:08:59");
+            dateLU1 = formatter.parse("2017-10-12 07:51:36");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Assignment assign1 = new Assignment();
+        assign1.setId(382);
+        assign1.setTitle("EMINL1H1 : Développement collaboratif, qualité: Quizz Git");
+        assign1.setOwner(entitiesServices.findUserById(359));
+        assign1.setDateCreated(dateC1);
+        assign1.setLastUpdated(dateLU1);
+        assign1.setGlobalId("c71b94b6-ad03-11e7-93a4-00163e3774aa");
+
+        assignments.add(assign1);
+
+        return assignements;
+    }
+
+    /**
+     * Initialise a list of Assignement
+     * @return users A list of Assignement
+     */
+    private ArrayList<Sequence> setUpSequence() {
+
+        ArrayList<Sequence> sequences = new ArrayList<>();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date dateC1 = null;
+        Date dateLU1 = null;
+        try {
+
+            dateC1 = formatter.parse("2017-10-09 17:23:58");
+            dateLU1 = formatter.parse("2017-10-12 08:01:17");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Sequence sequence1 = new Sequence();
+
+        sequence1.setId(611);
+        sequence1.setRank(1);
+        sequence1.setDateCreated(dateC1);
+        sequence1.setLastUpdated(dateLU1);
+        sequence1.setOwner(entitiesServices.findUserById(359));
+        sequence1.setAssignment(entitiesServices.findAssignmentById(382));
+        sequence1.setStatement(entitiesServices.findStatementById(618));
+        sequence1.setActiveInteraction(entitiesServices.findInteractionById(1714));
+        sequence1.setState("show");
+
+        Date dateC2 = null;
+        Date dateLU2 = null;
+        try {
+
+            dateC2 = formatter.parse("2017-10-09 17:38:16");
+            dateLU2 = formatter.parse("2017-10-10 08:54:53");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Sequence sequence2 = new Sequence();
+
+        sequence2.setId(615);
+        sequence2.setRank(5);
+        sequence2.setDateCreated(dateC2);
+        sequence2.setLastUpdated(dateLU2);
+        sequence2.setOwner(entitiesServices.findUserById(359));
+        sequence2.setAssignment(entitiesServices.findAssignmentById(382));
+        sequence2.setStatement(entitiesServices.findStatementById(622));
+        sequence2.setActiveInteraction(entitiesServices.findInteractionById(1690));
+        sequence2.setState("show");
+
+        sequences.add(sequence1);
+        sequences.add(sequence2);
+
+        return sequences;
     }
 
     /**
