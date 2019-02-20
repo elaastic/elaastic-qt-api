@@ -25,18 +25,15 @@ public class User {
     private String normalizedUsername;
     @Email
     @UniqueElements
+    @NotNull
     private String email;
     @NotBlank
     @Size(min = 4)
     private String password;
     @NotNull
     private boolean canBeUserOwner = false;
-    @NotNull
     @ManyToOne
     private User owner;
-
-    @OneToMany(mappedBy = "owner")
-    private List<User> owneredUser;
 
     public String getFullname() {
         return firstName + " " + lastName;
@@ -116,5 +113,23 @@ public class User {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (canBeUserOwner != user.canBeUserOwner) return false;
+        if (!firstName.equals(user.firstName)) return false;
+        if (!lastName.equals(user.lastName)) return false;
+        if (!username.equals(user.username)) return false;
+        if (!normalizedUsername.equals(user.normalizedUsername)) return false;
+        if (!email.equals(user.email)) return false;
+        if (!password.equals(user.password)) return false;
+        return owner != null ? owner.equals(user.owner) : user.owner == null;
     }
 }
