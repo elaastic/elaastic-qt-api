@@ -1,7 +1,9 @@
 package org.elaastic.qtapi.IntegrationTest;
 
 import org.elaastic.qtapi.entities.Assignment;
+import org.elaastic.qtapi.entities.Statement;
 import org.elaastic.qtapi.entities.User;
+import org.elaastic.qtapi.enumeration.QuestionType;
 import org.elaastic.qtapi.services.EntitiesServices;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,19 +31,105 @@ public class EntitiesServicesTest{
 
     private ArrayList<Assignment> assignments;
 
+    private ArrayList<Statement> statements;
+
     @Before
     public void setUp() {
 
         users = setUpUser();
+
+        statements = setUpStatement();
+
+
+    }
+
+    /**
+     * Initialise a list of Statement
+     * @returnA list of statement
+     */
+    private ArrayList<Statement> setUpStatement() {
+        Statement stat1, stat2, stat3;
+
+        ArrayList<Statement> statements = new ArrayList<>();
+
+        Date dateC1;
+        Date dateLU1;
+
+        //id;date_created;last_updated;title;content;owner_id;question_type;choice_specification;parent_statement_id;expected_explanation;
+        stat1 = new Statement();
+        stat1.setId(618);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        dateC1 = null;
+        dateLU1 = null;
+        try {
+            dateC1 = formatter.parse("2017-10-09 17:23:58");
+            dateLU1 = formatter.parse("2017-10-09 17:23:58");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        stat1.setDateCreated(dateC1);
+        stat1.setLastUpdated(dateLU1);
+        stat1.setTitle("Git - Concepts clés");
+        // can be a problem
+        stat1.setContent("<p>Cochez les assertions vraies :</p> " +
+                "<ol> " +
+                "<li>Git repose sur une architecture centralisée</li>" +
+                "<li>Avec Git, chaque développeur possède une copie du repository</li>" +
+                "<li>Le projet Git a été initié par Linus Thorvald pour les besoins du développement du noyau Linux</li>" +
+                "<li>Git n'est utilisable que sur les systèmes de type Unix </li> <li>Avec Git, il n'est plus possible d'avoir un repository partagé de référence</li>" +
+                "<li>Git est leader dans la catégorie des outils de gestion distribuée de version de code</li></ol>");
+        stat1.setOwner(entitiesServices.findUserById(359));
+        stat1.setQuestionType(QuestionType.MultipleChoice);
+        stat1.setChoiceSpecification("{\"expectedChoiceList\":[{\"index\":2,\"score\":33.333332},{\"index\":3,\"score\":33.333332},{\"index\":6,\"score\":33.333332}],\"choiceInteractionType\":\"MULTIPLE\",\"itemCount\":6}");
+        stat1.setParentStatement(null);
+        stat1.setExpectedExplanation("");
+
+        statements.add(stat1);
+
+
+        stat2 = new Statement();
+        stat2.setId(619);
+
+        dateC1 = null;
+        dateLU1 = null;
+        try {
+            dateC1 = formatter.parse("2017-10-09 17:26:16");
+            dateLU1 = formatter.parse("2017-10-09 17:26:16");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        stat2.setDateCreated(dateC1);
+        stat2.setLastUpdated(dateLU1);
+        stat2.setTitle("Git - Aire d'embarquement");
+        // can be a probleme
+        stat2.setContent("<p>L\'aire d'embarquement est le &quot;passage obligé&quot; pour un fichier que l\'on souhaite ajouter au repository.</p>" +
+                        "<ol>" +
+                        "<li>Vrai</li>" +
+                        "<li>Faux</li>" +
+                        "</ol>");
+
+        stat2.setOwner(entitiesServices.findUserById(359));
+        stat2.setQuestionType(QuestionType.ExclusiveChoice);
+        stat2.setChoiceSpecification("{\"expectedChoiceList\":[{\"index\":1,\"score\":100.0}],\"choiceInteractionType\":\"EXCLUSIVE\",\"itemCount\":2}");
+        stat2.setParentStatement(null);
+        stat2.setExpectedExplanation("");
+
+        statements.add(stat2);
+
+        return statements;
     }
 
     /**
      * Initialise a list of User
-     * @return users A list of User
+     * @return A list of User
      */
     private ArrayList<User> setUpUser() {
 
-        User user1, user2, user3, user4, user5;
+        User user1, user2, user3;
 
         // id, email, first_name, last_name, normalized_username, password, username, owner_id, can_be_user_owner
         ArrayList<User> users = new ArrayList<>();
@@ -94,7 +182,7 @@ public class EntitiesServicesTest{
         List<Assignment> allAssignement = entitiesServices.findAllAssignments();
         assignments = new ArrayList<Assignment>();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Date dateC1 = null;
         Date dateLU1 = null;
@@ -114,7 +202,8 @@ public class EntitiesServicesTest{
 
         assert(listContainTest(assignments, allAssignement));
     }
-  
+
+    @Test
     public void testfindAllUser() {
 
         List<User> fetchUser = entitiesServices.findAllUser();
@@ -127,10 +216,21 @@ public class EntitiesServicesTest{
     }
 
     @Test
+    public void testfindAllStatement() {
+
+        List<Statement> fetchStatements = entitiesServices.findAllStatement();
+        // Assert that the full name is in the List
+
+        assert(listContainTest(statements, fetchStatements));
+
+        // Test list size
+        assert(fetchStatements.size() == 5);
+    }
+    @Test
     public void findUserByIdTest() {
 
         User user1 = users.get(0),
-             user2 = users.get(users.size()-1);
+                user2 = users.get(users.size()-1);
 
         User fetchUser1 = entitiesServices.findUserById(user1.getId());
 

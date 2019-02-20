@@ -1,5 +1,7 @@
 package org.elaastic.qtapi.entities;
 
+import org.elaastic.qtapi.enumeration.QuestionType;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -157,9 +159,4 @@ public class Statement {
 //    }
 }
 
-enum QuestionType {
-    Undefined,
-    ExclusiveChoice,
-    MultipleChoice,
-    OpenEnded
-}
+
