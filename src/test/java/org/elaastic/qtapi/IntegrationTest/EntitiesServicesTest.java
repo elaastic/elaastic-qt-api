@@ -50,7 +50,7 @@ public class EntitiesServicesTest{
      * @returnA list of statement
      */
     private ArrayList<Statement> setUpStatement() {
-        Statement stat1, stat2, stat3;
+        Statement stat1, stat2;
 
         ArrayList<Statement> statements = new ArrayList<>();
 
