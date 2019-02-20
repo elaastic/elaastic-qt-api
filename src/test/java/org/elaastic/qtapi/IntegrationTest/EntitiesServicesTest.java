@@ -31,7 +31,9 @@ public class EntitiesServicesTest{
     private ArrayList<User> users;
 
     private ArrayList<Assignment> assignments;
+
     private ArrayList<Sequence> sequences;
+
     private ArrayList<Statement> statements;
 
     @Before
@@ -42,7 +44,6 @@ public class EntitiesServicesTest{
         sequences = setUpSequence();
         statements = setUpStatement();
 
-
     }
 
     /**
@@ -50,7 +51,7 @@ public class EntitiesServicesTest{
      * @returnA list of statement
      */
     private ArrayList<Statement> setUpStatement() {
-        Statement stat1, stat2;
+        Statement stat1, stat2, stat3;
 
         ArrayList<Statement> statements = new ArrayList<>();
 
@@ -127,11 +128,11 @@ public class EntitiesServicesTest{
 
     /**
      * Initialise a list of User
-     * @return users A list of User
+     * @return A list of User
      */
     private ArrayList<User> setUpUser() {
 
-        User user1, user2, user3, user4, user5;
+        User user1, user2, user3;
 
         // id, email, first_name, last_name, normalized_username, password, username, owner_id, can_be_user_owner
         ArrayList<User> users = new ArrayList<>();
@@ -214,6 +215,7 @@ public class EntitiesServicesTest{
 
     }
 
+    @Test
     public void testfindAllUser() {
 
         List<User> fetchUser = entitiesServices.findAllUser();
@@ -226,10 +228,21 @@ public class EntitiesServicesTest{
     }
 
     @Test
+    public void testfindAllStatement() {
+
+        List<Statement> fetchStatements = entitiesServices.findAllStatement();
+        // Assert that the full name is in the List
+
+        assert(listContainTest(statements, fetchStatements));
+
+        // Test list size
+        assert(fetchStatements.size() == 5);
+    }
+    @Test
     public void findUserByIdTest() {
 
         User user1 = users.get(0),
-             user2 = users.get(users.size()-1);
+                user2 = users.get(users.size()-1);
 
         User fetchUser1 = entitiesServices.findUserById(user1.getId());
 
