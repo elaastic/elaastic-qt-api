@@ -20,7 +20,7 @@ public class EntitiesServicesTest {
 
     @Autowired
     private EntitiesServices entitiesServices;
-
+  
     private ArrayList<User> users;
 
     @Before
