@@ -26,7 +26,7 @@ public class EntitiesServicesTest {
     @Before
     public void setUp() {
 
-
+        users = setUpUser();
 
     }
 
@@ -67,50 +67,24 @@ public class EntitiesServicesTest {
         users.add(user2);
 
         user3 = new User();
-        user3.setId(4938);
-        user3.setEmail("John_Doe___1@fakeuser.com");
+        user3.setId(4946);
+        user3.setEmail("John_Doe___9@fakeuser.com");
         user3.setFirstName("John");
         user3.setLastName("Doe");
-        user3.setNormalizedUsername("john_doe___1");
+        user3.setNormalizedUsername("john_doe___9");
         user3.setPassword("06c129f13e5ec40f6d08f57504d30cf416e6cad9");
-        user3.setUsername("John_Doe___1");
+        user3.setUsername("John_Doe___9");
         user3.setOwner(null);
         user3.setCanBeUserOwner((byte)0);
         // add the user
         users.add(user3);
 
-        user4 = new User();
-        user4.setId(4939);
-        user4.setEmail("John_Doe___2@fakeuser.com");
-        user4.setFirstName("John");
-        user4.setLastName("Doe");
-        user4.setNormalizedUsername("john_doe___2");
-        user4.setPassword("06c129f13e5ec40f6d08f57504d30cf416e6cad9");
-        user4.setUsername("John_Doe___2");
-        user4.setOwner(null);
-        user4.setCanBeUserOwner((byte)0);
-        // add the user
-        users.add(user4);
-
-        user5 = new User();
-        user5.setId(4940);
-        user5.setEmail("John_Doe___3@fakeuser.com");
-        user5.setFirstName("John");
-        user5.setLastName("Doe");
-        user5.setNormalizedUsername("john_doe___3");
-        user5.setPassword("06c129f13e5ec40f6d08f57504d30cf416e6cad9");
-        user5.setUsername("John_Doe___3");
-        user5.setOwner(null);
-        user5.setCanBeUserOwner((byte)0);
-        // add the user
-        users.add(user5);
 
         return users;
     }
 
     @Test
     public void testfindAllUser() {
-        users = setUpUser();
 
         List<User> fetchUser = entitiesServices.findAllUser();
         // Assert that the full name is in the List
@@ -125,5 +99,15 @@ public class EntitiesServicesTest {
     @Test
     public void findUserByIdTest() {
 
+        User user1 = users.get(0),
+             user2 = users.get(users.size()-1);
+
+        User fetchUser1 = entitiesServices.findUserById(user1.getId());
+
+        assert(user1.equals(fetchUser1));
+
+        User fetchUser2 = entitiesServices.findUserById(user2.getId());
+
+        assert(user2.equals(fetchUser2));
     }
 }
