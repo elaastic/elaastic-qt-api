@@ -20,7 +20,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class EntitiesServicesTest {
+public class EntitiesServicesTest{
 
     @Autowired
     private EntitiesServices entitiesServices;
@@ -29,11 +29,7 @@ public class EntitiesServicesTest {
 
     @Before
     public void setUp() {
-
-
-
         System.out.println("coucou");
-
     }
 
     @Test
@@ -59,6 +55,9 @@ public class EntitiesServicesTest {
         assign1.setDateCreated(dateC1);
         assign1.setLastUpdated(dateLU1);
         assign1.setGlobalId("c71b94b6-ad03-11e7-93a4-00163e3774aa");
+
+        listContainTest(assignments, allAssignement);
+
     }
 
     /**
@@ -67,7 +66,7 @@ public class EntitiesServicesTest {
      * @param containingList liste dans laquelle on test les objets
      * @return true si tout c'est bien passé false si le test ne c'est pas bien passé
      */
-    public boolean listContainTest(List<Object> contentsList, List<Object> containingList){
+    public boolean listContainTest(ArrayList<?> contentsList, List<?> containingList){
 
         for (Object obj: contentsList){
             if(!containingList.contains(obj)) {
