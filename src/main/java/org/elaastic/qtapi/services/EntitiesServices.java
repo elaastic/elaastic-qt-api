@@ -56,7 +56,7 @@ public class EntitiesServices {
         TypedQuery<Sequence> queryObj = entityManager.createQuery(query, Sequence.class);
         return queryObj.getResultList();
     }
-//
+
     public List<Statement> findAllStatement() {
 
         String query = "SELECT m FROM Statement m ORDER BY m.title" ;
