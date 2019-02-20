@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.elaastic.qtapi.enumeration.InteractionType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -177,8 +178,3 @@ public class Interaction {
     }
 }
 
-enum InteractionType {
-    ResponseSubmission,
-    Evaluation,
-    Read
-}

@@ -57,12 +57,12 @@ public class EntitiesServices {
         return queryObj.getResultList();
     }
 //
-//    public List<Statement> findAllStatement() {
-//
-//        String query = "SELECT m FROM Statement m ORDER BY m.title" ;
-//        TypedQuery<Statement> queryObj = entityManager.createQuery(query, Statement.class);
-//        return queryObj.getResultList();
-//    }
+    public List<Statement> findAllStatement() {
+
+        String query = "SELECT m FROM Statement m ORDER BY m.title" ;
+        TypedQuery<Statement> queryObj = entityManager.createQuery(query, Statement.class);
+        return queryObj.getResultList();
+    }
 
     public List<User> findAllUser() {
 

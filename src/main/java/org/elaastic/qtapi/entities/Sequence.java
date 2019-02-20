@@ -111,8 +111,3 @@ public class Sequence {
 
 }
 
-enum StateType {
-    beforeStart,
-    show,
-    afterStop;
-}
