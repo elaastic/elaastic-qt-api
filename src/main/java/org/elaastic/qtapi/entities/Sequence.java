@@ -36,9 +36,7 @@ public class Sequence {
 
     @NotNull
     private String state;
-    @NotNull
-    @Column(name = "results_are_published")
-    private Boolean resultsArePublished;
+
     public long getId() {
         return id;
     }
@@ -111,12 +109,5 @@ public class Sequence {
         this.state = state;
     }
 
-    public Boolean getResultsArePublished() {
-        return resultsArePublished;
-    }
-
-    public void setResultsArePublished(Boolean resultsArePublished) {
-        this.resultsArePublished = resultsArePublished;
-    }
 }
 

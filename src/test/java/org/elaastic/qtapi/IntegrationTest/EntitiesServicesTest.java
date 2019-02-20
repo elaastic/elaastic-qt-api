@@ -1,9 +1,8 @@
 package org.elaastic.qtapi.IntegrationTest;
 
 import org.elaastic.qtapi.entities.Assignment;
-import org.elaastic.qtapi.entities.Statement;
+import org.elaastic.qtapi.entities.Sequence;
 import org.elaastic.qtapi.entities.User;
-import org.elaastic.qtapi.enumeration.QuestionType;
 import org.elaastic.qtapi.services.EntitiesServices;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,105 +30,23 @@ public class EntitiesServicesTest{
 
     private ArrayList<Assignment> assignments;
 
-    private ArrayList<Statement> statements;
+    private ArrayList<Sequence> sequences;
 
     @Before
     public void setUp() {
 
         users = setUpUser();
-
-        statements = setUpStatement();
-
-
-    }
-
-    /**
-     * Initialise a list of Statement
-     * @returnA list of statement
-     */
-    private ArrayList<Statement> setUpStatement() {
-        Statement stat1, stat2;
-
-        ArrayList<Statement> statements = new ArrayList<>();
-
-        Date dateC1;
-        Date dateLU1;
-
-        //id;date_created;last_updated;title;content;owner_id;question_type;choice_specification;parent_statement_id;expected_explanation;
-        stat1 = new Statement();
-        stat1.setId(618);
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        dateC1 = null;
-        dateLU1 = null;
-        try {
-            dateC1 = formatter.parse("2017-10-09 17:23:58");
-            dateLU1 = formatter.parse("2017-10-09 17:23:58");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        stat1.setDateCreated(dateC1);
-        stat1.setLastUpdated(dateLU1);
-        stat1.setTitle("Git - Concepts clés");
-        // can be a problem
-        stat1.setContent("<p>Cochez les assertions vraies :</p> " +
-                "<ol> " +
-                "<li>Git repose sur une architecture centralisée</li>" +
-                "<li>Avec Git, chaque développeur possède une copie du repository</li>" +
-                "<li>Le projet Git a été initié par Linus Thorvald pour les besoins du développement du noyau Linux</li>" +
-                "<li>Git n'est utilisable que sur les systèmes de type Unix </li> <li>Avec Git, il n'est plus possible d'avoir un repository partagé de référence</li>" +
-                "<li>Git est leader dans la catégorie des outils de gestion distribuée de version de code</li></ol>");
-        stat1.setOwner(entitiesServices.findUserById(359));
-        stat1.setQuestionType(QuestionType.MultipleChoice);
-        stat1.setChoiceSpecification("{\"expectedChoiceList\":[{\"index\":2,\"score\":33.333332},{\"index\":3,\"score\":33.333332},{\"index\":6,\"score\":33.333332}],\"choiceInteractionType\":\"MULTIPLE\",\"itemCount\":6}");
-        stat1.setParentStatement(null);
-        stat1.setExpectedExplanation("");
-
-        statements.add(stat1);
-
-
-        stat2 = new Statement();
-        stat2.setId(619);
-
-        dateC1 = null;
-        dateLU1 = null;
-        try {
-            dateC1 = formatter.parse("2017-10-09 17:26:16");
-            dateLU1 = formatter.parse("2017-10-09 17:26:16");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        stat2.setDateCreated(dateC1);
-        stat2.setLastUpdated(dateLU1);
-        stat2.setTitle("Git - Aire d'embarquement");
-        // can be a probleme
-        stat2.setContent("<p>L\'aire d'embarquement est le &quot;passage obligé&quot; pour un fichier que l\'on souhaite ajouter au repository.</p>" +
-                        "<ol>" +
-                        "<li>Vrai</li>" +
-                        "<li>Faux</li>" +
-                        "</ol>");
-
-        stat2.setOwner(entitiesServices.findUserById(359));
-        stat2.setQuestionType(QuestionType.ExclusiveChoice);
-        stat2.setChoiceSpecification("{\"expectedChoiceList\":[{\"index\":1,\"score\":100.0}],\"choiceInteractionType\":\"EXCLUSIVE\",\"itemCount\":2}");
-        stat2.setParentStatement(null);
-        stat2.setExpectedExplanation("");
-
-        statements.add(stat2);
-
-        return statements;
+        assignments = setUpAssignement();
+        sequences = setUpSequence();
     }
 
     /**
      * Initialise a list of User
-     * @return A list of User
+     * @return users A list of User
      */
     private ArrayList<User> setUpUser() {
 
-        User user1, user2, user3;
+        User user1, user2, user3, user4, user5;
 
         // id, email, first_name, last_name, normalized_username, password, username, owner_id, can_be_user_owner
         ArrayList<User> users = new ArrayList<>();
@@ -180,7 +97,77 @@ public class EntitiesServicesTest{
     public void testFindAllAssignement(){
 
         List<Assignment> allAssignement = entitiesServices.findAllAssignments();
-        assignments = new ArrayList<Assignment>();
+
+        assert(allAssignement.size() == 1);
+
+        assert(listContainTest(assignments, allAssignement));
+
+    }
+
+    @Test
+    public void findAssignmentByIdTest() {
+
+        assert(assignments.get(0).equals(entitiesServices.findUserById(assignments.get(0).getId())));
+
+    }
+
+    @Test
+    public void findStatementByIdTest() {
+
+        assert(statements.get(0).equals(entitiesServices.findStatementById(statements.get(0).getId())));
+
+    }
+
+    @Test
+    public void findInteractionByIdTest() {
+
+        assert(interactions.get(0).equals(entitiesServices.findInteractionById(interactions.get(0).getId())));
+
+    }
+  
+    public void testfindAllUser() {
+
+        List<User> fetchUser = entitiesServices.findAllUser();
+        // Assert that the full name is in the List
+
+        assert(listContainTest(users, fetchUser));
+
+        // Test list size
+        assert(fetchUser.size() == 11);
+    }
+
+    @Test
+    public void findUserByIdTest() {
+
+        User user1 = users.get(0),
+             user2 = users.get(users.size()-1);
+
+        User fetchUser1 = entitiesServices.findUserById(user1.getId());
+
+        assert(user1.equals(fetchUser1));
+
+        User fetchUser2 = entitiesServices.findUserById(user2.getId());
+
+        assert(user2.equals(fetchUser2));
+    }
+
+    @Test
+    public void testFindAllSequence(){
+
+        List<Sequence> allSequence = entitiesServices.findAllSequence();
+
+        assert(allSequence.size() == 5);
+
+        assert(listContainTest(sequences, allSequence));
+    }
+
+    /**
+     * Initialise a list of Assignement
+     * @return users A list of Assignement
+     */
+    private ArrayList<Assignment> setUpAssignement() {
+
+        ArrayList<Assignment> assignements = new ArrayList<>();
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -200,45 +187,68 @@ public class EntitiesServicesTest{
         assign1.setLastUpdated(dateLU1);
         assign1.setGlobalId("c71b94b6-ad03-11e7-93a4-00163e3774aa");
 
-        assert(listContainTest(assignments, allAssignement));
+        assignments.add(assign1);
+
+        return assignements;
     }
 
-    @Test
-    public void testfindAllUser() {
+    /**
+     * Initialise a list of Assignement
+     * @return users A list of Assignement
+     */
+    private ArrayList<Sequence> setUpSequence() {
 
-        List<User> fetchUser = entitiesServices.findAllUser();
-        // Assert that the full name is in the List
+        ArrayList<Sequence> sequences = new ArrayList<>();
 
-        assert(listContainTest(users, fetchUser));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        // Test list size
-        assert(fetchUser.size() == 11);
-    }
+        Date dateC1 = null;
+        Date dateLU1 = null;
+        try {
 
-    @Test
-    public void testfindAllStatement() {
+            dateC1 = formatter.parse("2017-10-09 17:23:58");
+            dateLU1 = formatter.parse("2017-10-12 08:01:17");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Sequence sequence1 = new Sequence();
 
-        List<Statement> fetchStatements = entitiesServices.findAllStatement();
-        // Assert that the full name is in the List
+        sequence1.setId(611);
+        sequence1.setRank(1);
+        sequence1.setDateCreated(dateC1);
+        sequence1.setLastUpdated(dateLU1);
+        sequence1.setOwner(entitiesServices.findUserById(359));
+        sequence1.setAssignment(entitiesServices.findAssignmentById(382));
+        sequence1.setStatement(entitiesServices.findStatementById(618));
+        sequence1.setActiveInteraction(entitiesServices.findInteractionById(1714));
+        sequence1.setState("show");
 
-        assert(listContainTest(statements, fetchStatements));
+        Date dateC2 = null;
+        Date dateLU2 = null;
+        try {
 
-        // Test list size
-        assert(fetchStatements.size() == 5);
-    }
-    @Test
-    public void findUserByIdTest() {
+            dateC2 = formatter.parse("2017-10-09 17:38:16");
+            dateLU2 = formatter.parse("2017-10-10 08:54:53");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        User user1 = users.get(0),
-                user2 = users.get(users.size()-1);
+        Sequence sequence2 = new Sequence();
 
-        User fetchUser1 = entitiesServices.findUserById(user1.getId());
+        sequence2.setId(615);
+        sequence2.setRank(5);
+        sequence2.setDateCreated(dateC2);
+        sequence2.setLastUpdated(dateLU2);
+        sequence2.setOwner(entitiesServices.findUserById(359));
+        sequence2.setAssignment(entitiesServices.findAssignmentById(382));
+        sequence2.setStatement(entitiesServices.findStatementById(622));
+        sequence2.setActiveInteraction(entitiesServices.findInteractionById(1690));
+        sequence2.setState("show");
 
-        assert(user1.equals(fetchUser1));
+        sequences.add(sequence1);
+        sequences.add(sequence2);
 
-        User fetchUser2 = entitiesServices.findUserById(user2.getId());
-
-        assert(user2.equals(fetchUser2));
+        return sequences;
     }
 
     /**

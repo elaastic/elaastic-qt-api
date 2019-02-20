@@ -50,19 +50,19 @@ public class EntitiesServices {
 //        return queryObj.getResultList();
 //    }
 //
-//    public List<Sequence> findAllSequence() {
-//
-//        String query = "SELECT m FROM Sequence m ORDER BY m.dateCreated" ;
-//        TypedQuery<Sequence> queryObj = entityManager.createQuery(query, Sequence.class);
-//        return queryObj.getResultList();
-//    }
-//
-    public List<Statement> findAllStatement() {
+    public List<Sequence> findAllSequence() {
 
-        String query = "SELECT m FROM Statement m ORDER BY m.title" ;
-        TypedQuery<Statement> queryObj = entityManager.createQuery(query, Statement.class);
+        String query = "SELECT m FROM Sequence m ORDER BY m.dateCreated" ;
+        TypedQuery<Sequence> queryObj = entityManager.createQuery(query, Sequence.class);
         return queryObj.getResultList();
     }
+//
+//    public List<Statement> findAllStatement() {
+//
+//        String query = "SELECT m FROM Statement m ORDER BY m.title" ;
+//        TypedQuery<Statement> queryObj = entityManager.createQuery(query, Statement.class);
+//        return queryObj.getResultList();
+//    }
 
     public List<User> findAllUser() {
 
@@ -73,6 +73,18 @@ public class EntitiesServices {
 
     public User findUserById(long id) {
         return entityManager.find(User.class, id);
+    }
+
+    public Assignment findAssignmentById(long id) {
+        return entityManager.find(Assignment.class, id);
+    }
+
+    public Statement findStatementById(long id) {
+        return entityManager.find(Statement.class, id);
+    }
+
+    public Interaction findInteractionById(long id) {
+        return entityManager.find(Interaction.class, id);
     }
 
 }
