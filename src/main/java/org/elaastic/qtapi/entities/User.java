@@ -31,16 +31,12 @@ public class User {
     @Size(min = 4)
     private String password;
     @NotNull
-    private boolean canBeUserOwner = false;
+    private boolean canBeUserOwner;
     @ManyToOne
     private User owner;
 
     public String getFullname() {
         return firstName + " " + lastName;
-    }
-
-    public String toString() {
-        return getFullname();
     }
 
     public long getId() {
@@ -131,5 +127,20 @@ public class User {
         if (!email.equals(user.email)) return false;
         if (!password.equals(user.password)) return false;
         return owner != null ? owner.equals(user.owner) : user.owner == null;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", normalizedUsername='" + normalizedUsername + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", canBeUserOwner=" + canBeUserOwner +
+                ", owner=" + owner +
+                '}';
     }
 }

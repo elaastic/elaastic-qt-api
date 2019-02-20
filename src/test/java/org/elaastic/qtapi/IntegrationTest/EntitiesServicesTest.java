@@ -49,7 +49,7 @@ public class EntitiesServicesTest {
         user1.setPassword("7110eda4d09e062aa5e4a390b0a572ac0d2c0220");
         user1.setUsername("admin");
         user1.setOwner(null);
-        user1.setCanBeUserOwner(true);
+        user1.setCanBeUserOwner(false);
 
         users.add(user1);
 
@@ -62,6 +62,8 @@ public class EntitiesServicesTest {
 
         // Assert that the full name is in the List
         for (User user : users) {
+            System.out.println(user);
+            System.out.println(fetchProject.get(0));
             assert(fetchProject.contains(user));
         }
     }
