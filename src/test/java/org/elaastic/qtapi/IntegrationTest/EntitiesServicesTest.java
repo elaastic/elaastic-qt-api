@@ -20,15 +20,15 @@ public class EntitiesServicesTest {
     @Autowired
     private EntitiesServices entitiesServices;
 
-    private User user;
-
     @Before
     public void setUp() {
 
-        // given a a valid Enterprise
-        user = new User();
-
         System.out.println("coucou");
+
+    }
+
+    @Test
+    public void test(){
 
     }
 }
