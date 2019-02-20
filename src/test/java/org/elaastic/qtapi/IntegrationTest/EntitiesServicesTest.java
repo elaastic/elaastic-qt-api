@@ -31,9 +31,4 @@ public class EntitiesServicesTest {
         System.out.println("coucou");
 
     }
-
-    @Test
-    public void testfindAllAssignments() {
-        List<User> fetchProject = entitiesServices.findAllUser();
-    }
 }
