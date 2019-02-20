@@ -71,4 +71,7 @@ public class EntitiesServices {
         return queryObj.getResultList();
     }
 
+    public User findUserById(long id) {
+        return entityManager.find(User.class, id);
+    }
 }
