@@ -70,4 +70,8 @@ public class EntitiesServices {
         TypedQuery<User> queryObj = entityManager.createQuery(query, User.class);
         return queryObj.getResultList();
     }
+
+    public User findUserById(long id) {
+        return entityManager.find(User.class, id);
+    }
 }
