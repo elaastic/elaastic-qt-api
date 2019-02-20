@@ -31,7 +31,7 @@ public class User {
     @Size(min = 4)
     private String password;
     @NotNull
-    private boolean canBeUserOwner;
+    private byte canBeUserOwner;
     @ManyToOne
     private User owner;
 
@@ -96,10 +96,10 @@ public class User {
     }
 
     public boolean isCanBeUserOwner() {
-        return canBeUserOwner;
+        return canBeUserOwner == 1;
     }
 
-    public void setCanBeUserOwner(boolean canBeUserOwner) {
+    public void setCanBeUserOwner(byte canBeUserOwner) {
         this.canBeUserOwner = canBeUserOwner;
     }
 
@@ -118,15 +118,15 @@ public class User {
 
         User user = (User) o;
 
-        if (id != user.id) return false;
-        if (canBeUserOwner != user.canBeUserOwner) return false;
-        if (!firstName.equals(user.firstName)) return false;
-        if (!lastName.equals(user.lastName)) return false;
-        if (!username.equals(user.username)) return false;
-        if (!normalizedUsername.equals(user.normalizedUsername)) return false;
-        if (!email.equals(user.email)) return false;
-        if (!password.equals(user.password)) return false;
-        return owner != null ? owner.equals(user.owner) : user.owner == null;
+        if (getId() != user.getId()) return false;
+        if (isCanBeUserOwner() != user.isCanBeUserOwner()) return false;
+        if (!getFirstName().equals(user.getFirstName())) return false;
+        if (!getLastName().equals(user.getLastName())) return false;
+        if (!getUsername().equals(user.getUsername())) return false;
+        if (!getNormalizedUsername().equals(user.getNormalizedUsername())) return false;
+        if (!getEmail().equals(user.getEmail())) return false;
+        if (!getPassword().equals(user.getPassword())) return false;
+        return getOwner() != null ? getOwner().equals(user.getOwner()) : user.getOwner() == null;
     }
 
     @Override
