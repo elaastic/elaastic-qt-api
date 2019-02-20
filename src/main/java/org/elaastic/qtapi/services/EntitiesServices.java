@@ -15,13 +15,13 @@ public class EntitiesServices {
     @PersistenceContext
     private EntityManager entityManager;
 
-//    public List<Assignment> findAllAssignments() {
-//
-//        String query = "SELECT m FROM Assignment m ORDER BY m.title" ;
-//        TypedQuery<Assignment> queryObj = entityManager.createQuery(query, Assignment.class);
-//        return queryObj.getResultList();
-//    }
-//
+    public List<Assignment> findAllAssignments() {
+
+        String query = "SELECT m FROM Assignment m ORDER BY m.title" ;
+        TypedQuery<Assignment> queryObj = entityManager.createQuery(query, Assignment.class);
+        return queryObj.getResultList();
+    }
+
 //    public List<Attachement> findAllAttachement() {
 //
 //        String query = "SELECT m FROM Attachement m ORDER BY m.name" ;
@@ -70,4 +70,5 @@ public class EntitiesServices {
         TypedQuery<User> queryObj = entityManager.createQuery(query, User.class);
         return queryObj.getResultList();
     }
+
 }
