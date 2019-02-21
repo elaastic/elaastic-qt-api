@@ -221,7 +221,7 @@ public class EntitiesServicesTest{
      */
     private ArrayList<Assignment> setUpAssignement() {
 
-        ArrayList<Assignment> assignements = new ArrayList<>();
+        ArrayList<Assignment> assignments = new ArrayList<>();
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -243,7 +243,7 @@ public class EntitiesServicesTest{
 
         assignments.add(assign1);
 
-        return assignements;
+        return assignments;
     }
 
     /**
