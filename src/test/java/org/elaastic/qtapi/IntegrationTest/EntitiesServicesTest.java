@@ -36,6 +36,8 @@ public class EntitiesServicesTest{
 
     private ArrayList<Interaction> interactions;
 
+    private ArrayList<InteractionResponse> interactionResponses;
+
     @Before
     public void setUp() {
 
@@ -44,6 +46,18 @@ public class EntitiesServicesTest{
         sequences = setUpSequence();
         statements = setUpStatement();
         interactions = setUpInteraction();
+        interactionResponses = setUpInteractionResponse();
+
+    }
+
+    @Test
+    public void testFindAllInteractionResponse(){
+
+        List<InteractionResponse> fetchInteractionResponse = entitiesServices.findAllInteractionResponse();
+
+        assert(fetchInteractionResponse.size() == 1);
+
+        assert(listContainTest(interactionResponses, fetchInteractionResponse));
 
     }
 

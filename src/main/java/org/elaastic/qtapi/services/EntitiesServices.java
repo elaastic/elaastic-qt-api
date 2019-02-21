@@ -22,13 +22,13 @@ public class EntitiesServices {
         return queryObj.getResultList();
     }
 
-//    public List<Attachement> findAllAttachement() {
-//
-//        String query = "SELECT m FROM Attachement m ORDER BY m.name" ;
-//        TypedQuery<Attachement> queryObj = entityManager.createQuery(query, Attachement.class);
-//        return queryObj.getResultList();
-//    }
-//
+    public List<Attachement> findAllAttachement() {
+
+        String query = "SELECT m FROM Attachement m ORDER BY m.name" ;
+        TypedQuery<Attachement> queryObj = entityManager.createQuery(query, Attachement.class);
+        return queryObj.getResultList();
+    }
+
     public List<Interaction> findAllInteraction() {
 
         String query = "SELECT m FROM Interaction m ORDER BY m.interactionType" ;
