@@ -38,6 +38,8 @@ public class EntitiesServicesTest{
 
     private ArrayList<InteractionResponse> interactionResponses;
 
+    private ArrayList<Attachement> attachements;
+
     @Before
     public void setUp() {
 
@@ -47,6 +49,16 @@ public class EntitiesServicesTest{
         statements = setUpStatement();
         interactions = setUpInteraction();
         interactionResponses = setUpInteractionResponse();
+        attachements = setUpAttachement();
+
+    }
+
+    @Test
+    public void testFindAllAttachement(){
+
+        List<Attachement> fetchAttachement = entitiesServices.findAllAttachement();
+
+        assert(listContainTest(interactionResponses, fetchAttachement));
 
     }
 
@@ -54,8 +66,6 @@ public class EntitiesServicesTest{
     public void testFindAllInteractionResponse(){
 
         List<InteractionResponse> fetchInteractionResponse = entitiesServices.findAllInteractionResponse();
-
-        assert(fetchInteractionResponse.size() == 1);
 
         assert(listContainTest(interactionResponses, fetchInteractionResponse));
 
@@ -65,8 +75,6 @@ public class EntitiesServicesTest{
     public void testFindAllInteraction(){
 
         List<Interaction> fetchInteraction = entitiesServices.findAllInteraction();
-
-        assert(fetchInteraction.size() == 1);
 
         assert(listContainTest(interactions, fetchInteraction));
 
@@ -115,6 +123,12 @@ public class EntitiesServicesTest{
         assert(fetchSequence.size() == 5);
 
         assert(listContainTest(sequences, fetchSequence));
+    }
+
+    @Test
+    public void findInteractionResponseByIdTest() {
+
+        assert(interactionResponses.get(0).equals(entitiesServices.findInteractionResponseById(interactionResponses.get(0).getId())));
     }
 
     @Test
@@ -231,7 +245,7 @@ public class EntitiesServicesTest{
 
     /**
      * Initialise a list of Assignement
-     * @return users A list of Assignement
+     * @return users A list of assignement
      */
     private ArrayList<Assignment> setUpAssignment() {
 
@@ -261,8 +275,8 @@ public class EntitiesServicesTest{
     }
 
     /**
-     * Initialise a list of Assignement
-     * @return users A list of Assignement
+     * Initialise a list of Sequence
+     * @return users A list of sequence
      */
     private ArrayList<Sequence> setUpSequence() {
 
@@ -400,8 +414,8 @@ public class EntitiesServicesTest{
     }
 
     /**
-     * Initialise a list of Statement
-     * @returnA list of statement
+     * Initialise a list of Interaction
+     * @returnA list of interaction
      */
     private ArrayList<Interaction> setUpInteraction(){
 
@@ -463,8 +477,8 @@ public class EntitiesServicesTest{
     }
 
     /**
-     * Initialise a list of Statement
-     * @returnA list of statement
+     * Initialise a list of InteractionResponse
+     * @returnA list of interactionResponse
      */
     private ArrayList<InteractionResponse> setUpInteractionResponse(){
 
@@ -491,7 +505,7 @@ public class EntitiesServicesTest{
         interactionResp1.setChoiceListSpecification("[2,3,6]");
         interactionResp1.setExplanation(null);
         interactionResp1.setConfidenceDegree(null);
-        interactionResp1.setScore(100);
+        interactionResp1.setScore(100f);
         interactionResp1.setAttempt(1);
         interactionResp1.setMeanGrade(null);
 
@@ -515,15 +529,52 @@ public class EntitiesServicesTest{
         interactionResp2.setChoiceListSpecification("[2]");
         interactionResp2.setExplanation("<p>La plupart du temps il est utilie de partager le .gitignore avec les autres développeur</p>");
         interactionResp2.setConfidenceDegree(3);
-        interactionResp2.setScore(100);
+        interactionResp2.setScore(100f);
         interactionResp2.setAttempt(2);
         interactionResp2.setMeanGrade(3.33333f);
-
 
         interactions.add(interactionResp1);
         interactions.add(interactionResp2);
 
         return interactions;
+    }
+
+    /**
+     * Initialise a list of Attachement
+     * @return A list of attachement
+     */
+    private ArrayList<Attachement> setUpAttachement(){
+
+        ArrayList<Attachement> attachements = new ArrayList<>();
+
+        Attachement attachement1 = new Attachement();
+
+        attachement1.setPath("C:/testPath/test.png");
+        attachement1.setName("test");
+        attachement1.setOriginalName(null);
+        attachement1.setSize(null);
+        attachement1.setDimensionHeight(null);
+        attachement1.setDimensionWidth(null);
+        attachement1.setTypeMime(null);
+        attachement1.setStatement(null);
+        attachement1.setToDelete(null);
+
+        Attachement attachement2 = new Attachement();
+
+        attachement2.setPath("C:/testPath/test2.png");
+        attachement2.setName("test2");
+        attachement2.setOriginalName(null);
+        attachement2.setSize(null);
+        attachement2.setDimensionHeight(null);
+        attachement2.setDimensionWidth(null);
+        attachement2.setTypeMime(null);
+        attachement2.setStatement(null);
+        attachement2.setToDelete(null);
+
+        attachements.add(attachement1);
+        attachements.add(attachement2);
+
+        return attachements;
     }
 
 }

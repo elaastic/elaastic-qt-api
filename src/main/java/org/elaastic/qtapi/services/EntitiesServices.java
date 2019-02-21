@@ -38,7 +38,7 @@ public class EntitiesServices {
 
     public List<InteractionResponse> findAllInteractionResponse() {
 
-        String query = "SELECT m FROM InteractionResponse m ORDER BY m.interactionType" ;
+        String query = "SELECT m FROM InteractionResponse m ORDER BY m.learner" ;
         TypedQuery<InteractionResponse> queryObj = entityManager.createQuery(query, InteractionResponse.class);
         return queryObj.getResultList();
     }
@@ -98,5 +98,7 @@ public class EntitiesServices {
     public Sequence findSequenceById(long id) {
         return entityManager.find(Sequence.class, id);
     }
+
+    public InteractionResponse findInteractionResponseById(long id) { return entityManager.find(InteractionResponse.class, id); }
 
 }

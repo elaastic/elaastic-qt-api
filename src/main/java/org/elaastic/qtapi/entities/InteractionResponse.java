@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.internal.jline.internal.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -42,7 +41,7 @@ public class InteractionResponse {
     private Float meanGrade;
     @Column(name = "choice_list_specification")
     private String choiceListSpecification;
-    private float score;
+    private Float score;
 
     @Override
     public boolean equals(Object o) {
@@ -168,11 +167,11 @@ public class InteractionResponse {
         this.choiceListSpecification = choiceListSpecification;
     }
 
-    public float getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 }

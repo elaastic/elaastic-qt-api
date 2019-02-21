@@ -20,11 +20,11 @@ public class Attachement {
 
     @Column(name="original_name")
     private String originalName;
-    private int size;
+    private Integer size;
     @Column(name="dimension_height")
-    private int dimensionHeight;
+    private Integer dimensionHeight;
     @Column(name="dimension_width")
-    private int dimensionWidth;
+    private Integer dimensionWidth;
     @Column(name="type_mime")
     private String typeMime;
 
@@ -83,19 +83,19 @@ public class Attachement {
         this.size = size;
     }
 
-    public int getDimensionHeight() {
+    public Integer getDimensionHeight() {
         return dimensionHeight;
     }
 
-    public void setDimensionHeight(int dimensionHeight) {
+    public void setDimensionHeight(Integer dimensionHeight) {
         this.dimensionHeight = dimensionHeight;
     }
 
-    public int getDimensionWidth() {
+    public Integer getDimensionWidth() {
         return dimensionWidth;
     }
 
-    public void setDimensionWidth(int dimensionWidth) {
+    public void setDimensionWidth(Integer dimensionWidth) {
         this.dimensionWidth = dimensionWidth;
     }
 
