@@ -3,6 +3,7 @@ package org.elaastic.qtapi.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Sequence {
@@ -36,6 +37,22 @@ public class Sequence {
 
     @NotNull
     private String state;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sequence sequence = (Sequence) o;
+        return getId() == sequence.getId() &&
+                getRank() == sequence.getRank() &&
+                getDateCreated().equals(sequence.getDateCreated()) &&
+                getLastUpdated().equals(sequence.getLastUpdated()) &&
+                getOwner().equals(sequence.getOwner()) &&
+                getAssignment().equals(sequence.getAssignment()) &&
+                getStatement().equals(sequence.getStatement()) &&
+                Objects.equals(getActiveInteraction(), sequence.getActiveInteraction()) &&
+                getState().equals(sequence.getState());
+    }
 
     public long getId() {
         return id;

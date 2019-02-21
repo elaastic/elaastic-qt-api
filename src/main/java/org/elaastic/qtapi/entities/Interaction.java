@@ -9,10 +9,7 @@ import org.elaastic.qtapi.enumeration.InteractionType;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 public class Interaction {
@@ -47,15 +44,26 @@ public class Interaction {
     private String state;
 
     private String results; // Can be null
+
     @Column(name = "explanation_recommendation_mapping")
     private String explanationRecommendationMapping; // Can be null
 
-    /**
-     * Indicate if the interaction is read
-     * @return true if the interaction is read
-     */
-    boolean isRead() {
-        return interactionType == InteractionType.Read.toString();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Interaction that = (Interaction) o;
+        return getId() == that.getId() &&
+                getRank() == that.getRank() &&
+                getInteractionType().equals(that.getInteractionType()) &&
+                getSpecification().equals(that.getSpecification()) &&
+                getDateCreated().equals(that.getDateCreated()) &&
+                getLastUpdated().equals(that.getLastUpdated()) &&
+                getOwner().equals(that.getOwner()) &&
+                getSequence().equals(that.getSequence()) &&
+                getState().equals(that.getState()) &&
+                Objects.equals(getResults(), that.getResults()) &&
+                Objects.equals(getExplanationRecommendationMapping(), that.getExplanationRecommendationMapping());
     }
 
     /** // TODO ask if it's the good methode to get top responses

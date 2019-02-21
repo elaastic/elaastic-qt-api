@@ -1,9 +1,7 @@
 package org.elaastic.qtapi.IntegrationTest;
 
-import org.elaastic.qtapi.entities.Assignment;
-import org.elaastic.qtapi.entities.Sequence;
-import org.elaastic.qtapi.entities.Statement;
-import org.elaastic.qtapi.entities.User;
+import org.elaastic.qtapi.entities.*;
+import org.elaastic.qtapi.enumeration.InteractionType;
 import org.elaastic.qtapi.enumeration.QuestionType;
 import org.elaastic.qtapi.services.EntitiesServices;
 import org.junit.Before;
@@ -36,6 +34,8 @@ public class EntitiesServicesTest{
 
     private ArrayList<Statement> statements;
 
+    private ArrayList<Interaction> interactions;
+
     @Before
     public void setUp() {
 
@@ -43,21 +43,29 @@ public class EntitiesServicesTest{
         assignments = setUpAssignement();
         sequences = setUpSequence();
         statements = setUpStatement();
+        interactions = setUpInteraction();
+
+    }
+
+    @Test
+    public void testFindAllInteraction(){
+
+        List<Interaction> fetchInteraction = entitiesServices.findAllInteraction();
+
+        assert(fetchInteraction.size() == 1);
+
+        assert(listContainTest(interactions, fetchInteraction));
 
     }
 
     @Test
     public void testFindAllAssignement(){
 
-        List<Assignment> allAssignement = entitiesServices.findAllAssignments();
+        List<Assignment> fetchAssignement = entitiesServices.findAllAssignments();
 
-        assignments = new ArrayList<Assignment>();
+        assert(fetchAssignement.size() == 1);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        assert(allAssignement.size() == 1);
-
-        assert(listContainTest(assignments, allAssignement));
+        assert(listContainTest(assignments, fetchAssignement));
 
     }
 
@@ -88,11 +96,11 @@ public class EntitiesServicesTest{
     @Test
     public void testFindAllSequence(){
 
-        List<Sequence> allSequence = entitiesServices.findAllSequence();
+        List<Sequence> fetchSequence = entitiesServices.findAllSequence();
 
-        assert(allSequence.size() == 5);
+        assert(fetchSequence.size() == 5);
 
-        assert(listContainTest(sequences, allSequence));
+        assert(listContainTest(sequences, fetchSequence));
     }
 
     @Test
@@ -128,6 +136,13 @@ public class EntitiesServicesTest{
     public void findInteractionByIdTest() {
 
         assert(interactions.get(0).equals(entitiesServices.findInteractionById(interactions.get(0).getId())));
+
+    }
+
+    @Test
+    public void findSequenceByIdTest() {
+
+        assert(sequences.get(0).equals(entitiesServices.findSequenceById(sequences.get(0).getId())));
 
     }
 
@@ -368,5 +383,68 @@ public class EntitiesServicesTest{
         statements.add(stat2);
 
         return statements;
+    }
+
+    /**
+     * Initialise a list of Statement
+     * @returnA list of statement
+     */
+    private ArrayList<Interaction> setUpInteraction(){
+
+        ArrayList<Interaction> interactions = new ArrayList<>();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date dateC1 = null;
+        Date dateLU1 = null;
+        try {
+            dateC1 = formatter.parse("2017-10-12 07:51:33");
+            dateLU1 = formatter.parse("2017-10-12 07:57:52");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Interaction interaction1 = new Interaction();
+
+        interaction1.setId(1712);
+        interaction1.setRank(1);
+        interaction1.setDateCreated(dateC1);
+        interaction1.setLastUpdated(dateLU1);
+        interaction1.setOwner(entitiesServices.findUserById(359));
+        interaction1.setInteractionType(InteractionType.ResponseSubmission.toString());
+        interaction1.setSpecification("{\"studentsProvideExplanation\":false,\"studentsProvideConfidenceDegree\":false}");
+        interaction1.setSequence(entitiesServices.findSequenceById(611));
+        interaction1.setResults("{\"1\":[0.000,29.167,87.500,58.333,0.000,8.333,87.500]}");
+        interaction1.setExplanationRecommendationMapping(null);
+        interaction1.setState("afterStop");
+
+        Date dateC2 = null;
+        Date dateLU2 = null;
+        try {
+
+            dateC2 = formatter.parse("2017-10-12 07:51:36");
+            dateLU2 = formatter.parse("2017-10-12 08:01:24");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Interaction interaction2 = new Interaction();
+
+        interaction2.setId(1715);
+        interaction2.setRank(1);
+        interaction2.setDateCreated(dateC2);
+        interaction2.setLastUpdated(dateLU2);
+        interaction2.setOwner(entitiesServices.findUserById(359));
+        interaction2.setInteractionType(InteractionType.ResponseSubmission.toString());
+        interaction2.setSpecification("{\"studentsProvideExplanation\":false,\"studentsProvideConfidenceDegree\":false}");
+        interaction2.setSequence(entitiesServices.findSequenceById(612));
+        interaction2.setResults("{\"1\":[0.000,95.652,4.348]}");
+        interaction2.setExplanationRecommendationMapping(null);
+        interaction2.setState("afterStop");
+
+        interactions.add(interaction1);
+        interactions.add(interaction2);
+
+        return interactions;
     }
 }

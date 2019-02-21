@@ -2,6 +2,7 @@ package org.elaastic.qtapi.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 public class Attachement {
@@ -32,6 +33,23 @@ public class Attachement {
 
     @Column(name="to_delete")
     private Boolean toDelete;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Attachement that = (Attachement) o;
+        return id == that.id &&
+                getSize() == that.getSize() &&
+                getDimensionHeight() == that.getDimensionHeight() &&
+                getDimensionWidth() == that.getDimensionWidth() &&
+                getPath().equals(that.getPath()) &&
+                getName().equals(that.getName()) &&
+                Objects.equals(getOriginalName(), that.getOriginalName()) &&
+                Objects.equals(getTypeMime(), that.getTypeMime()) &&
+                Objects.equals(getStatement(), that.getStatement()) &&
+                Objects.equals(getToDelete(), that.getToDelete());
+    }
 
     public String getPath() {
         return path;

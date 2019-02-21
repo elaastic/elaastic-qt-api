@@ -3,6 +3,7 @@ package org.elaastic.qtapi.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class PeerGrading {
@@ -27,6 +28,20 @@ public class PeerGrading {
     @NotNull
     @ManyToOne
     private InteractionResponse response;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PeerGrading that = (PeerGrading) o;
+        return getId() == that.getId() &&
+                getDateCreated().equals(that.getDateCreated()) &&
+                getLastUpdated().equals(that.getLastUpdated()) &&
+                Objects.equals(getGrade(), that.getGrade()) &&
+                Objects.equals(getAnnotation(), that.getAnnotation()) &&
+                getGrader().equals(that.getGrader()) &&
+                getResponse().equals(that.getResponse());
+    }
 
     public long getId() {
         return id;

@@ -8,10 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Table(name = "choice_interaction_response")
@@ -46,11 +43,29 @@ class InteractionResponse {
     private String choiceListSpecification;
     private float score;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InteractionResponse that = (InteractionResponse) o;
+        return getId() == that.getId() &&
+                getAttempt() == that.getAttempt() &&
+                getConfidenceDegree() == that.getConfidenceDegree() &&
+                Float.compare(that.getMeanGrade(), getMeanGrade()) == 0 &&
+                Float.compare(that.getScore(), getScore()) == 0 &&
+                getDateCreated().equals(that.getDateCreated()) &&
+                getLastUpdated().equals(that.getLastUpdated()) &&
+                getLearner().equals(that.getLearner()) &&
+                getInteraction().equals(that.getInteraction()) &&
+                Objects.equals(getExplanation(), that.getExplanation()) &&
+                Objects.equals(getChoiceListSpecification(), that.getChoiceListSpecification());
+    }
+
     /**
      * Get the choice list
      * @return the choice list
      */
-    ArrayList<Integer>choiceList() {
+    public ArrayList<Integer> choiceList() {
         if (choiceListSpecification != null) {
             return new ArrayList<>();
         }
@@ -72,5 +87,92 @@ class InteractionResponse {
         return res;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public User getLearner() {
+        return learner;
+    }
+
+    public void setLearner(User learner) {
+        this.learner = learner;
+    }
+
+    public Interaction getInteraction() {
+        return interaction;
+    }
+
+    public void setInteraction(Interaction interaction) {
+        this.interaction = interaction;
+    }
+
+    public int getAttempt() {
+        return attempt;
+    }
+
+    public void setAttempt(int attempt) {
+        this.attempt = attempt;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
+
+    public int getConfidenceDegree() {
+        return confidenceDegree;
+    }
+
+    public void setConfidenceDegree(int confidenceDegree) {
+        this.confidenceDegree = confidenceDegree;
+    }
+
+    public float getMeanGrade() {
+        return meanGrade;
+    }
+
+    public void setMeanGrade(float meanGrade) {
+        this.meanGrade = meanGrade;
+    }
+
+    public String getChoiceListSpecification() {
+        return choiceListSpecification;
+    }
+
+    public void setChoiceListSpecification(String choiceListSpecification) {
+        this.choiceListSpecification = choiceListSpecification;
+    }
+
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
 }
 

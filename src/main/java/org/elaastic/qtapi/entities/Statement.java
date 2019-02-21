@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "statement")
@@ -46,6 +47,25 @@ public class Statement {
 
     @OneToMany(mappedBy = "statement")
     private List<Attachement> attachements;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Statement statement = (Statement) o;
+        return getId() == statement.getId() &&
+                getTitle().equals(statement.getTitle()) &&
+                getContent().equals(statement.getContent()) &&
+                getExpectedExplanation().equals(statement.getExpectedExplanation()) &&
+                getChoiceSpecification().equals(statement.getChoiceSpecification()) &&
+                getQuestionType() == statement.getQuestionType() &&
+                Objects.equals(getParentStatement(), statement.getParentStatement()) &&
+                getDateCreated().equals(statement.getDateCreated()) &&
+                getLastUpdated().equals(statement.getLastUpdated()) &&
+                getOwner().equals(statement.getOwner()) &&
+                Objects.equals(attachements, statement.attachements);
+    }
+
     /**
      * @return true if statement describes an open-ended question
      */

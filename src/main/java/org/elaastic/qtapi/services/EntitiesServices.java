@@ -29,12 +29,12 @@ public class EntitiesServices {
 //        return queryObj.getResultList();
 //    }
 //
-//    public List<Interaction> findAllInteraction() {
-//
-//        String query = "SELECT m FROM Interaction m ORDER BY m.interactionType" ;
-//        TypedQuery<Interaction> queryObj = entityManager.createQuery(query, Interaction.class);
-//        return queryObj.getResultList();
-//    }
+    public List<Interaction> findAllInteraction() {
+
+        String query = "SELECT m FROM Interaction m ORDER BY m.interactionType" ;
+        TypedQuery<Interaction> queryObj = entityManager.createQuery(query, Interaction.class);
+        return queryObj.getResultList();
+    }
 //
 //    public List<LearnerSequence> findAllLearnerSequence() {
 //
@@ -85,6 +85,10 @@ public class EntitiesServices {
 
     public Interaction findInteractionById(long id) {
         return entityManager.find(Interaction.class, id);
+    }
+
+    public Sequence findSequenceById(long id) {
+        return entityManager.find(Sequence.class, id);
     }
 
 }

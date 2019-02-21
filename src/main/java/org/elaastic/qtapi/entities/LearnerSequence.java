@@ -3,6 +3,7 @@ package org.elaastic.qtapi.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class LearnerSequence {
@@ -27,6 +28,24 @@ public class LearnerSequence {
     @NotNull
     @Column(name="last_updated")
     private Date lastUpdated;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LearnerSequence that = (LearnerSequence) o;
+        return getId() == that.getId() &&
+                getLearner().equals(that.getLearner()) &&
+                getSequence().equals(that.getSequence()) &&
+                getActiveInteraction().equals(that.getActiveInteraction()) &&
+                getDateCreated().equals(that.getDateCreated()) &&
+                getLastUpdated().equals(that.getLastUpdated());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getLearner(), getSequence(), getActiveInteraction(), getDateCreated(), getLastUpdated());
+    }
 
     public long getId() {
         return id;
