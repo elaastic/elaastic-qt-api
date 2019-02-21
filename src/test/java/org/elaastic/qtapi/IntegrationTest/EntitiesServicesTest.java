@@ -40,6 +40,8 @@ public class EntitiesServicesTest{
 
     private ArrayList<Attachement> attachements;
 
+    private ArrayList<PeerGrading> peerGradings;
+
     @Before
     public void setUp() {
 
@@ -50,7 +52,17 @@ public class EntitiesServicesTest{
         interactions = setUpInteraction();
         interactionResponses = setUpInteractionResponse();
         attachements = setUpAttachement();
+        peerGradings = setUpPeerGrading();
 
+    }
+
+    @Test
+    public void testFindAllPeerGrading() {
+        List<PeerGrading> fetchPeerGrading = entitiesServices.findAllPeerGrading();
+
+        assert(fetchPeerGrading.size() == 2);
+
+        assert(listContainTest(peerGradings, fetchPeerGrading));
     }
 
     @Test
@@ -577,4 +589,31 @@ public class EntitiesServicesTest{
         return attachements;
     }
 
+    private ArrayList<PeerGrading> setUpPeerGrading() {
+
+        PeerGrading grade1, grade2;
+
+        ArrayList<PeerGrading> peerGradings = new ArrayList<>();
+        grade1 = new PeerGrading();
+        grade1.setId(15);
+        grade1.setGrader(entitiesServices.findUserById(359));
+        grade1.setGrade(4.5f);
+        grade1.setAnnotation("peergrading1");
+        grade1.setResponse(entitiesServices.findInteractionResponseById(7893));
+
+        // add the peerGradings
+        peerGradings.add(grade1);
+
+        grade2 = new PeerGrading();
+        grade2.setId(16);
+        grade2.setGrader(entitiesServices.findUserById(359));
+        grade2.setGrade(5.0f);
+        grade2.setAnnotation("peergrading2");
+        grade2.setResponse(entitiesServices.findInteractionResponseById(7784));
+
+        // add the peerGradings
+        peerGradings.add(grade2);
+
+        return peerGradings;
+    }
 }

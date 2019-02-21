@@ -51,13 +51,13 @@ public class EntitiesServices {
 //        return queryObj.getResultList();
 //    }
 //
-//    public List<PeerGrading> findAllPeerGrading() {
-//
-//        String query = "SELECT m FROM PeerGrading m ORDER BY m.dateCreated" ;
-//        TypedQuery<PeerGrading> queryObj = entityManager.createQuery(query, PeerGrading.class);
-//        return queryObj.getResultList();
-//    }
-//
+    public List<PeerGrading> findAllPeerGrading() {
+
+        String query = "SELECT m FROM PeerGrading m ORDER BY m.dateCreated" ;
+        TypedQuery<PeerGrading> queryObj = entityManager.createQuery(query, PeerGrading.class);
+        return queryObj.getResultList();
+    }
+
     public List<Sequence> findAllSequence() {
 
         String query = "SELECT m FROM Sequence m ORDER BY m.dateCreated" ;
