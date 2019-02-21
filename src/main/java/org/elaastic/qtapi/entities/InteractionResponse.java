@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.internal.jline.internal.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +13,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "choice_interaction_response")
-class InteractionResponse {
+public class InteractionResponse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,9 +37,9 @@ class InteractionResponse {
 
     private String explanation;
     @Column(name = "confidence_degree")
-    private int confidenceDegree;
+    private Integer confidenceDegree;
     @Column(name = "mean_grade")
-    private float meanGrade;
+    private Float meanGrade;
     @Column(name = "choice_list_specification")
     private String choiceListSpecification;
     private float score;
@@ -143,19 +144,19 @@ class InteractionResponse {
         this.explanation = explanation;
     }
 
-    public int getConfidenceDegree() {
+    public Integer getConfidenceDegree() {
         return confidenceDegree;
     }
 
-    public void setConfidenceDegree(int confidenceDegree) {
+    public void setConfidenceDegree(Integer confidenceDegree) {
         this.confidenceDegree = confidenceDegree;
     }
 
-    public float getMeanGrade() {
+    public Float getMeanGrade() {
         return meanGrade;
     }
 
-    public void setMeanGrade(float meanGrade) {
+    public void setMeanGrade(Float meanGrade) {
         this.meanGrade = meanGrade;
     }
 

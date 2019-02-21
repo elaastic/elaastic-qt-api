@@ -35,6 +35,14 @@ public class EntitiesServices {
         TypedQuery<Interaction> queryObj = entityManager.createQuery(query, Interaction.class);
         return queryObj.getResultList();
     }
+
+    public List<InteractionResponse> findAllInteractionResponse() {
+
+        String query = "SELECT m FROM InteractionResponse m ORDER BY m.interactionType" ;
+        TypedQuery<InteractionResponse> queryObj = entityManager.createQuery(query, InteractionResponse.class);
+        return queryObj.getResultList();
+    }
+
 //
 //    public List<LearnerSequence> findAllLearnerSequence() {
 //

@@ -40,7 +40,7 @@ public class EntitiesServicesTest{
     public void setUp() {
 
         users = setUpUser();
-        assignments = setUpAssignement();
+        assignments = setUpAssignment();
         sequences = setUpSequence();
         statements = setUpStatement();
         interactions = setUpInteraction();
@@ -219,7 +219,7 @@ public class EntitiesServicesTest{
      * Initialise a list of Assignement
      * @return users A list of Assignement
      */
-    private ArrayList<Assignment> setUpAssignement() {
+    private ArrayList<Assignment> setUpAssignment() {
 
         ArrayList<Assignment> assignments = new ArrayList<>();
 
@@ -447,4 +447,69 @@ public class EntitiesServicesTest{
 
         return interactions;
     }
+
+    /**
+     * Initialise a list of Statement
+     * @returnA list of statement
+     */
+    private ArrayList<InteractionResponse> setUpInteractionResponse(){
+
+        ArrayList<InteractionResponse> interactions = new ArrayList<>();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date dateC1 = null;
+        Date dateLU1 = null;
+        try {
+            dateC1 = formatter.parse("2017-10-12 07:52:29");
+            dateLU1 = formatter.parse("2017-10-12 07:52:29");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        InteractionResponse interactionResp1 = new InteractionResponse();
+
+        interactionResp1.setId(7893);
+        interactionResp1.setDateCreated(dateC1);
+        interactionResp1.setLastUpdated(dateLU1);
+        interactionResp1.setLearner(entitiesServices.findUserById(2662));
+        interactionResp1.setInteraction(entitiesServices.findInteractionById(1712));
+        interactionResp1.setChoiceListSpecification("[2,3,6]");
+        interactionResp1.setExplanation(null);
+        interactionResp1.setConfidenceDegree(null);
+        interactionResp1.setScore(100);
+        interactionResp1.setAttempt(1);
+        interactionResp1.setMeanGrade(null);
+
+        Date dateC2 = null;
+        Date dateLU2 = null;
+        try {
+
+            dateC2 = formatter.parse("2017-10-11 14:09:53");
+            dateLU2 = formatter.parse("2017-10-12 06:44:51");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        InteractionResponse interactionResp2 = new InteractionResponse();
+
+        interactionResp2.setId(7784);
+        interactionResp2.setDateCreated(dateC2);
+        interactionResp2.setLastUpdated(dateLU2);
+        interactionResp2.setLearner(entitiesServices.findUserById(2659));
+        interactionResp2.setInteraction(entitiesServices.findInteractionById(1682));
+        interactionResp2.setChoiceListSpecification("[2]");
+        interactionResp2.setExplanation("<p>La plupart du temps il est utilie de partager le .gitignore avec les autres développeur</p>");
+        interactionResp2.setConfidenceDegree(3);
+        interactionResp2.setScore(100);
+        interactionResp2.setAttempt(2);
+        interactionResp2.setMeanGrade(3.33333f);
+
+
+        interactions.add(interactionResp1);
+        interactions.add(interactionResp2);
+
+        return interactions;
+    }
+
 }
