@@ -43,14 +43,13 @@ public class EntitiesServices {
         return queryObj.getResultList();
     }
 
-//
-//    public List<LearnerSequence> findAllLearnerSequence() {
-//
-//        String query = "SELECT m FROM LearnerSequence m ORDER BY m.learner" ;
-//        TypedQuery<LearnerSequence> queryObj = entityManager.createQuery(query, LearnerSequence.class);
-//        return queryObj.getResultList();
-//    }
-//
+    public List<LearnerSequence> findAllLearnerSequence() {
+
+        String query = "SELECT m FROM LearnerSequence m ORDER BY m.learner" ;
+        TypedQuery<LearnerSequence> queryObj = entityManager.createQuery(query, LearnerSequence.class);
+        return queryObj.getResultList();
+    }
+
     public List<PeerGrading> findAllPeerGrading() {
 
         String query = "SELECT m FROM PeerGrading m ORDER BY m.dateCreated" ;

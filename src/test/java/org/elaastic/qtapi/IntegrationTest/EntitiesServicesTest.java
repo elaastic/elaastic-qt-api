@@ -42,6 +42,8 @@ public class EntitiesServicesTest{
 
     private ArrayList<PeerGrading> peerGradings;
 
+    private ArrayList<LearnerSequence> learnerSequences;
+
     @Before
     public void setUp() {
 
@@ -53,7 +55,16 @@ public class EntitiesServicesTest{
         interactionResponses = setUpInteractionResponse();
         attachements = setUpAttachement();
         peerGradings = setUpPeerGrading();
+        learnerSequences = setUpLearnerSequence();
+    }
 
+    @Test
+    public void testFindAllLearnerSequence() {
+        List<LearnerSequence> fetchLearnerSequence = entitiesServices.findAllLearnerSequence();
+
+        assert(fetchLearnerSequence.size() == 2);
+
+        assert(listContainTest(learnerSequences, fetchLearnerSequence));
     }
 
     @Test
@@ -616,4 +627,51 @@ public class EntitiesServicesTest{
 
         return peerGradings;
     }
+
+    private ArrayList<LearnerSequence> setUpLearnerSequence() {
+
+        ArrayList<LearnerSequence> learnerSequences = new ArrayList<>();
+
+        LearnerSequence learnerSequence1 = new LearnerSequence();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date dateC1 = null;
+        Date dateLU1 = null;
+        try {
+            dateC1 = formatter.parse("2017-10-12 07:52:29");
+            dateLU1 = formatter.parse("2017-10-12 07:52:29");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        learnerSequence1.setLearner(entitiesServices.findUserById(359));
+        learnerSequence1.setSequence(entitiesServices.findSequenceById(611));
+        learnerSequence1.setActiveInteraction(entitiesServices.findInteractionById(1712));
+        learnerSequence1.setDateCreated(dateC1);
+        learnerSequence1.setLastUpdated(dateLU1);
+
+        LearnerSequence learnerSequence2 = new LearnerSequence();
+
+        Date dateC2 = null;
+        Date dateLU2 = null;
+        try {
+            dateC2 = formatter.parse("2017-10-11 14:09:53");
+            dateLU2 = formatter.parse("2017-10-12 06:44:51");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        learnerSequence1.setLearner(entitiesServices.findUserById(359));
+        learnerSequence1.setSequence(entitiesServices.findSequenceById(615));
+        learnerSequence1.setActiveInteraction(entitiesServices.findInteractionById(1715));
+        learnerSequence1.setDateCreated(dateC1);
+        learnerSequence1.setLastUpdated(dateLU1);
+
+        learnerSequences.add(learnerSequence1);
+        learnerSequences.add(learnerSequence2);
+
+        return learnerSequences;
+    }
+
 }
