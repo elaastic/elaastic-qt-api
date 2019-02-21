@@ -19,7 +19,7 @@ public class PeerGrading {
     @Column(name="last_updated")
     private Date lastUpdated;
 
-    private Float grade; // Can be null
+    private double grade; // Can be null
     private String annotation; // Can be null
 
     @NotNull
@@ -67,11 +67,11 @@ public class PeerGrading {
         this.lastUpdated = lastUpdated;
     }
 
-    public Float getGrade() {
+    public Double getGrade() {
         return grade;
     }
 
-    public void setGrade(Float grade) {
+    public void setGrade(Double grade) {
         this.grade = grade;
     }
 
