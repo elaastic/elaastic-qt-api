@@ -5,6 +5,7 @@ import org.elaastic.qtapi.enumeration.QuestionType;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +30,7 @@ public class Statement {
     @Column(name = "choice_specification")
     private String choiceSpecification;
     @NotNull
-    private QuestionType questionType;
+    private String questionType;
 
     @ManyToOne
     private Statement parentStatement;
@@ -53,17 +54,17 @@ public class Statement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Statement statement = (Statement) o;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return getId() == statement.getId() &&
                 getTitle().equals(statement.getTitle()) &&
-                getContent().equals(statement.getContent()) &&
+                getContent().substring(0,10).equals(statement.getContent().substring(0,10)) &&
                 getExpectedExplanation().equals(statement.getExpectedExplanation()) &&
                 getChoiceSpecification().equals(statement.getChoiceSpecification()) &&
-                getQuestionType() == statement.getQuestionType() &&
+                getQuestionType().equals(statement.getQuestionType()) &&
                 Objects.equals(getParentStatement(), statement.getParentStatement()) &&
                 getDateCreated().equals(statement.getDateCreated()) &&
                 getLastUpdated().equals(statement.getLastUpdated()) &&
-                getOwner().equals(statement.getOwner()) &&
-                Objects.equals(attachements, statement.attachements);
+                getOwner().equals(statement.getOwner());
     }
 
     /**
@@ -71,7 +72,7 @@ public class Statement {
      */
     boolean isOpenEnded() {
 
-        return questionType == QuestionType.OpenEnded;
+        return questionType == QuestionType.OpenEnded.toString();
     }
 
     /**
@@ -79,7 +80,7 @@ public class Statement {
      */
     boolean isMultipleChoice() {
 
-        return questionType == QuestionType.MultipleChoice;
+        return questionType == QuestionType.MultipleChoice.toString();
     }
 
     /**
@@ -87,7 +88,7 @@ public class Statement {
      */
     boolean isExclusiveChoice() {
 
-        return questionType == QuestionType.ExclusiveChoice;
+        return questionType == QuestionType.ExclusiveChoice.toString();
     }
 
     public long getId() {
@@ -130,11 +131,11 @@ public class Statement {
         this.choiceSpecification = choiceSpecification;
     }
 
-    public QuestionType getQuestionType() {
+    public String getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(QuestionType questionType) {
+    public void setQuestionType(String questionType) {
         this.questionType = questionType;
     }
 

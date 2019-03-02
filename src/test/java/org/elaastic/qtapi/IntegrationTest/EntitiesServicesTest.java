@@ -1,8 +1,10 @@
 package org.elaastic.qtapi.IntegrationTest;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import org.elaastic.qtapi.entities.*;
 import org.elaastic.qtapi.enumeration.InteractionType;
 import org.elaastic.qtapi.enumeration.QuestionType;
+
 import org.elaastic.qtapi.services.EntitiesServices;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -81,7 +84,9 @@ public class EntitiesServicesTest{
 
         List<Attachement> fetchAttachement = entitiesServices.findAllAttachement();
 
-        assert(listContainTest(interactionResponses, fetchAttachement));
+        assert(fetchAttachement.size() == 2);
+
+        assert(listContainTest(attachements, fetchAttachement));
 
     }
 
@@ -89,6 +94,8 @@ public class EntitiesServicesTest{
     public void testFindAllInteractionResponse(){
 
         List<InteractionResponse> fetchInteractionResponse = entitiesServices.findAllInteractionResponse();
+
+        assert(fetchInteractionResponse.size() == 8);
 
         assert(listContainTest(interactionResponses, fetchInteractionResponse));
 
@@ -98,6 +105,8 @@ public class EntitiesServicesTest{
     public void testFindAllInteraction(){
 
         List<Interaction> fetchInteraction = entitiesServices.findAllInteraction();
+
+        assert(fetchInteraction.size() == 2);
 
         assert(listContainTest(interactions, fetchInteraction));
 
@@ -118,24 +127,28 @@ public class EntitiesServicesTest{
     public void testfindAllUser() {
 
         List<User> fetchUser = entitiesServices.findAllUser();
-        // Assert that the full name is in the List
-
-        assert(listContainTest(users, fetchUser));
 
         // Test list size
-        assert(fetchUser.size() == 11);
+        assert(fetchUser.size() == 12);
+
+        // Assert that the full name is in the List
+        assert(listContainTest(users, fetchUser));
+
+
     }
 
     @Test
     public void testfindAllStatement() {
 
         List<Statement> fetchStatements = entitiesServices.findAllStatement();
-        // Assert that the full name is in the List
-
-        assert(listContainTest(statements, fetchStatements));
 
         // Test list size
         assert(fetchStatements.size() == 5);
+
+        // Assert that the full name is in the List
+        assert(listContainTest(statements, fetchStatements));
+
+
     }
 
     @Test
@@ -143,7 +156,7 @@ public class EntitiesServicesTest{
 
         List<Sequence> fetchSequence = entitiesServices.findAllSequence();
 
-        assert(fetchSequence.size() == 5);
+        assert(fetchSequence.size() == 2);
 
         assert(listContainTest(sequences, fetchSequence));
     }
@@ -172,7 +185,7 @@ public class EntitiesServicesTest{
     @Test
     public void findAssignmentByIdTest() {
 
-        assert(assignments.get(0).equals(entitiesServices.findUserById(assignments.get(0).getId())));
+        assert(assignments.get(0).equals(entitiesServices.findAssignmentById(assignments.get(0).getId())));
 
     }
 
@@ -325,7 +338,7 @@ public class EntitiesServicesTest{
         sequence1.setOwner(entitiesServices.findUserById(359));
         sequence1.setAssignment(entitiesServices.findAssignmentById(382));
         sequence1.setStatement(entitiesServices.findStatementById(618));
-        sequence1.setActiveInteraction(entitiesServices.findInteractionById(1714));
+        sequence1.setActiveInteraction(entitiesServices.findInteractionById(1712));
         sequence1.setState("show");
 
         Date dateC2 = null;
@@ -347,7 +360,7 @@ public class EntitiesServicesTest{
         sequence2.setOwner(entitiesServices.findUserById(359));
         sequence2.setAssignment(entitiesServices.findAssignmentById(382));
         sequence2.setStatement(entitiesServices.findStatementById(622));
-        sequence2.setActiveInteraction(entitiesServices.findInteractionById(1690));
+        sequence2.setActiveInteraction(entitiesServices.findInteractionById(1688));
         sequence2.setState("show");
 
         sequences.add(sequence1);
@@ -387,15 +400,15 @@ public class EntitiesServicesTest{
         stat1.setLastUpdated(dateLU1);
         stat1.setTitle("Git - Concepts clés");
         // can be a problem
-        stat1.setContent("<p>Cochez les assertions vraies :</p> " +
+        stat1.setContent("<p>Cochez les assertions vraies :</p>" +
                 "<ol> " +
-                "<li>Git repose sur une architecture centralisée</li>" +
-                "<li>Avec Git, chaque développeur possède une copie du repository</li>" +
+                "<li>Git repose sur une architecture centralisée</li>  " +
+                "<li>Avec Git, chaque développeur possède une copie du repository</li>  " +
                 "<li>Le projet Git a été initié par Linus Thorvald pour les besoins du développement du noyau Linux</li>" +
                 "<li>Git n'est utilisable que sur les systèmes de type Unix </li> <li>Avec Git, il n'est plus possible d'avoir un repository partagé de référence</li>" +
                 "<li>Git est leader dans la catégorie des outils de gestion distribuée de version de code</li></ol>");
         stat1.setOwner(entitiesServices.findUserById(359));
-        stat1.setQuestionType(QuestionType.MultipleChoice);
+        stat1.setQuestionType(QuestionType.MultipleChoice.toString());
         stat1.setChoiceSpecification("{\"expectedChoiceList\":[{\"index\":2,\"score\":33.333332},{\"index\":3,\"score\":33.333332},{\"index\":6,\"score\":33.333332}],\"choiceInteractionType\":\"MULTIPLE\",\"itemCount\":6}");
         stat1.setParentStatement(null);
         stat1.setExpectedExplanation("");
@@ -406,17 +419,20 @@ public class EntitiesServicesTest{
         stat2 = new Statement();
         stat2.setId(619);
 
-        dateC1 = null;
-        dateLU1 = null;
+        Date dateC2;
+        Date dateLU2;
+
+        dateC2 = null;
+        dateLU2 = null;
         try {
-            dateC1 = formatter.parse("2017-10-09 17:26:16");
-            dateLU1 = formatter.parse("2017-10-09 17:26:16");
+            dateC2 = formatter.parse("2017-10-09 17:26:16");
+            dateLU2 = formatter.parse("2017-10-09 17:26:16");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        stat2.setDateCreated(dateC1);
-        stat2.setLastUpdated(dateLU1);
+        stat2.setDateCreated(dateC2);
+        stat2.setLastUpdated(dateLU2);
         stat2.setTitle("Git - Aire d'embarquement");
         // can be a probleme
         stat2.setContent("<p>L\'aire d'embarquement est le &quot;passage obligé&quot; pour un fichier que l\'on souhaite ajouter au repository.</p>" +
@@ -424,9 +440,8 @@ public class EntitiesServicesTest{
                 "<li>Vrai</li>" +
                 "<li>Faux</li>" +
                 "</ol>");
-
         stat2.setOwner(entitiesServices.findUserById(359));
-        stat2.setQuestionType(QuestionType.ExclusiveChoice);
+        stat2.setQuestionType(QuestionType.ExclusiveChoice.toString());
         stat2.setChoiceSpecification("{\"expectedChoiceList\":[{\"index\":1,\"score\":100.0}],\"choiceInteractionType\":\"EXCLUSIVE\",\"itemCount\":2}");
         stat2.setParentStatement(null);
         stat2.setExpectedExplanation("");
@@ -473,25 +488,25 @@ public class EntitiesServicesTest{
         Date dateLU2 = null;
         try {
 
-            dateC2 = formatter.parse("2017-10-12 07:51:36");
-            dateLU2 = formatter.parse("2017-10-12 08:01:24");
+            dateC2 = formatter.parse("2017-10-10 08:54:53");
+            dateLU2 = formatter.parse("2017-12-13 21:08:59");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         Interaction interaction2 = new Interaction();
 
-        interaction2.setId(1715);
+        interaction2.setId(1688);
         interaction2.setRank(1);
         interaction2.setDateCreated(dateC2);
         interaction2.setLastUpdated(dateLU2);
         interaction2.setOwner(entitiesServices.findUserById(359));
         interaction2.setInteractionType(InteractionType.ResponseSubmission.toString());
-        interaction2.setSpecification("{\"studentsProvideExplanation\":false,\"studentsProvideConfidenceDegree\":false}");
-        interaction2.setSequence(entitiesServices.findSequenceById(612));
-        interaction2.setResults("{\"1\":[0.000,95.652,4.348]}");
+        interaction2.setSpecification("{\"studentsProvideExplanation\":true,\"studentsProvideConfidenceDegree\":true}");
+        interaction2.setSequence(entitiesServices.findSequenceById(615));
+        interaction2.setResults("{\"1\":[0.000,100.000,0.000],\"2\":[0.000,93.939,6.061]}");
         interaction2.setExplanationRecommendationMapping(null);
-        interaction2.setState("afterStop");
+        interaction2.setState("beforeStart");
 
         interactions.add(interaction1);
         interactions.add(interaction2);
@@ -523,7 +538,7 @@ public class EntitiesServicesTest{
         interactionResp1.setId(7893);
         interactionResp1.setDateCreated(dateC1);
         interactionResp1.setLastUpdated(dateLU1);
-        interactionResp1.setLearner(entitiesServices.findUserById(2662));
+        interactionResp1.setLearner(entitiesServices.findUserById(359));
         interactionResp1.setInteraction(entitiesServices.findInteractionById(1712));
         interactionResp1.setChoiceListSpecification("[2,3,6]");
         interactionResp1.setExplanation(null);
@@ -536,25 +551,25 @@ public class EntitiesServicesTest{
         Date dateLU2 = null;
         try {
 
-            dateC2 = formatter.parse("2017-10-11 14:09:53");
-            dateLU2 = formatter.parse("2017-10-12 06:44:51");
+            dateC2 = formatter.parse("2017-12-13 21:07:04");
+            dateLU2 = formatter.parse("2017-12-13 21:07:04");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         InteractionResponse interactionResp2 = new InteractionResponse();
 
-        interactionResp2.setId(7784);
+        interactionResp2.setId(11777);
         interactionResp2.setDateCreated(dateC2);
         interactionResp2.setLastUpdated(dateLU2);
-        interactionResp2.setLearner(entitiesServices.findUserById(2659));
-        interactionResp2.setInteraction(entitiesServices.findInteractionById(1682));
+        interactionResp2.setLearner(entitiesServices.findUserById(359));
+        interactionResp2.setInteraction(entitiesServices.findInteractionById(1688));
         interactionResp2.setChoiceListSpecification("[2]");
         interactionResp2.setExplanation("<p>La plupart du temps il est utilie de partager le .gitignore avec les autres développeur</p>");
-        interactionResp2.setConfidenceDegree(3);
-        interactionResp2.setScore(100f);
-        interactionResp2.setAttempt(2);
-        interactionResp2.setMeanGrade(3.33333f);
+        interactionResp2.setConfidenceDegree(0);
+        interactionResp2.setScore(0f);
+        interactionResp2.setAttempt(1);
+        interactionResp2.setMeanGrade(null);
 
         interactions.add(interactionResp1);
         interactions.add(interactionResp2);
@@ -572,6 +587,7 @@ public class EntitiesServicesTest{
 
         Attachement attachement1 = new Attachement();
 
+        attachement1.setId(1);
         attachement1.setPath("C:/testPath/test.png");
         attachement1.setName("test");
         attachement1.setOriginalName(null);
@@ -584,6 +600,7 @@ public class EntitiesServicesTest{
 
         Attachement attachement2 = new Attachement();
 
+        attachement2.setId(2);
         attachement2.setPath("C:/testPath/test2.png");
         attachement2.setName("test2");
         attachement2.setOriginalName(null);
@@ -604,9 +621,22 @@ public class EntitiesServicesTest{
 
         PeerGrading grade1, grade2;
 
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date dateC1 = null;
+        Date dateLU1 = null;
+        try {
+            dateC1 = formatter.parse("2017-12-13 20:27:20");
+            dateLU1 = formatter.parse("2017-12-13 20:27:20");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         ArrayList<PeerGrading> peerGradings = new ArrayList<>();
         grade1 = new PeerGrading();
         grade1.setId(15);
+        grade1.setDateCreated(dateC1);
+        grade1.setLastUpdated(dateLU1);
         grade1.setGrader(entitiesServices.findUserById(359));
         grade1.setGrade(4.5f);
         grade1.setAnnotation("peergrading1");
@@ -615,12 +645,23 @@ public class EntitiesServicesTest{
         // add the peerGradings
         peerGradings.add(grade1);
 
+        Date dateC2 = null;
+        Date dateLU2 = null;
+        try {
+            dateC2 = formatter.parse("2017-12-13 21:07:04");
+            dateLU2 = formatter.parse("2017-12-13 21:07:04");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         grade2 = new PeerGrading();
         grade2.setId(16);
+        grade2.setDateCreated(dateC2);
+        grade2.setLastUpdated(dateLU2);
         grade2.setGrader(entitiesServices.findUserById(359));
         grade2.setGrade(5.0f);
         grade2.setAnnotation("peergrading2");
-        grade2.setResponse(entitiesServices.findInteractionResponseById(7784));
+        grade2.setResponse(entitiesServices.findInteractionResponseById(11777));
 
         // add the peerGradings
         peerGradings.add(grade2);
@@ -645,6 +686,7 @@ public class EntitiesServicesTest{
             e.printStackTrace();
         }
 
+        learnerSequence1.setId(1);
         learnerSequence1.setLearner(entitiesServices.findUserById(359));
         learnerSequence1.setSequence(entitiesServices.findSequenceById(611));
         learnerSequence1.setActiveInteraction(entitiesServices.findInteractionById(1712));
@@ -662,11 +704,12 @@ public class EntitiesServicesTest{
             e.printStackTrace();
         }
 
-        learnerSequence1.setLearner(entitiesServices.findUserById(359));
-        learnerSequence1.setSequence(entitiesServices.findSequenceById(615));
-        learnerSequence1.setActiveInteraction(entitiesServices.findInteractionById(1715));
-        learnerSequence1.setDateCreated(dateC1);
-        learnerSequence1.setLastUpdated(dateLU1);
+        learnerSequence2.setId(2);
+        learnerSequence2.setLearner(entitiesServices.findUserById(359));
+        learnerSequence2.setSequence(entitiesServices.findSequenceById(615));
+        learnerSequence2.setActiveInteraction(entitiesServices.findInteractionById(1688));
+        learnerSequence2.setDateCreated(dateC2);
+        learnerSequence2.setLastUpdated(dateLU2);
 
         learnerSequences.add(learnerSequence1);
         learnerSequences.add(learnerSequence2);

@@ -50,15 +50,15 @@ public class InteractionResponse {
         InteractionResponse that = (InteractionResponse) o;
         return getId() == that.getId() &&
                 getAttempt() == that.getAttempt() &&
-                getConfidenceDegree() == that.getConfidenceDegree() &&
-                Float.compare(that.getMeanGrade(), getMeanGrade()) == 0 &&
-                Float.compare(that.getScore(), getScore()) == 0 &&
                 getDateCreated().equals(that.getDateCreated()) &&
                 getLastUpdated().equals(that.getLastUpdated()) &&
                 getLearner().equals(that.getLearner()) &&
                 getInteraction().equals(that.getInteraction()) &&
                 Objects.equals(getExplanation(), that.getExplanation()) &&
-                Objects.equals(getChoiceListSpecification(), that.getChoiceListSpecification());
+                Objects.equals(getConfidenceDegree(), that.getConfidenceDegree()) &&
+                Objects.equals(getMeanGrade(), that.getMeanGrade()) &&
+                Objects.equals(getChoiceListSpecification(), that.getChoiceListSpecification()) &&
+                Objects.equals(getScore(), that.getScore());
     }
 
     /**

@@ -39,7 +39,7 @@ public class Attachement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Attachement that = (Attachement) o;
-        return id == that.id &&
+        return getId() == that.getId() &&
                 getSize() == that.getSize() &&
                 getDimensionHeight() == that.getDimensionHeight() &&
                 getDimensionWidth() == that.getDimensionWidth() &&
@@ -50,6 +50,10 @@ public class Attachement {
                 Objects.equals(getStatement(), that.getStatement()) &&
                 Objects.equals(getToDelete(), that.getToDelete());
     }
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 
     public String getPath() {
         return path;

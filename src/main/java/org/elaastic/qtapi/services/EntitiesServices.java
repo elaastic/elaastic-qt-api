@@ -86,9 +86,7 @@ public class EntitiesServices {
         return entityManager.find(Assignment.class, id);
     }
 
-    public Statement findStatementById(long id) {
-        return entityManager.find(Statement.class, id);
-    }
+    public Statement findStatementById(long id) { return entityManager.find(Statement.class, id); }
 
     public Interaction findInteractionById(long id) {
         return entityManager.find(Interaction.class, id);
