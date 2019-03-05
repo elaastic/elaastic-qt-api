@@ -1,3 +1,5 @@
+-- Some foreign key are drop because we don't have data that reference them.
+
 INSERT INTO `user` (`id`, `account_expired`, `account_locked`, `email`, `enabled`, `first_name`, `last_name`, `normalized_username`, `password`, `password_expired`, `username`, `version`, `owner_id`, `can_be_user_owner`)
 VALUES (359,0,0,'admin3@tsaap.org',1,'Admin3','Tsaap3','admin3','7110eda4d09e062aa5e4a390b0a572ac0d2c0220',0,'admin3',0,NULL,b'1');
 
@@ -52,3 +54,4 @@ VALUES (1,1,'2017-10-12 07:52:29','2017-10-12 07:52:29',359,611,1712,100),
 
 ALTER TABLE `peer_grading`
 	DROP FOREIGN KEY `fk_peer_grading_response_id`;
+
