@@ -16,14 +16,14 @@ ALTER TABLE `interaction`
 
 ALTER TABLE `sequence`
   DROP FOREIGN KEY `fk_sequence_interaction`;
-	
+
 ALTER TABLE `choice_interaction_response`
   DROP FOREIGN KEY `fk_choice_interaction_response_learner`;
-	
+
 INSERT INTO `interaction` (`id`,`version`,`date_created`,`last_updated`,`rank`,`specification`,`owner_id`,`sequence_id`,`interaction_type`,`state`,`results`,`explanation_recommendation_mapping`)
 VALUES (1712,2,'2017-10-12 07:51:33','2017-10-12 07:57:52',1,'{\"studentsProvideExplanation\":false,\"studentsProvideConfidenceDegree\":false}',359,611,'ResponseSubmission','afterStop','{\"1\":[0.000,29.167,87.500,58.333,0.000,8.333,87.500]}',NULL),
 	(1688,33,'2017-10-10 08:54:53','2017-12-13 21:08:59',1,'{\"studentsProvideExplanation\":true,\"studentsProvideConfidenceDegree\":true}',359,615,'ResponseSubmission','beforeStart','{\"1\":[0.000,100.000,0.000],\"2\":[0.000,93.939,6.061]}',NULL);
-	
+
 INSERT INTO `sequence` (`id`,`version`,`date_created`,`last_updated`,`rank`,`owner_id`,`assignment_id`,`statement_id`,`active_interaction_id`,`state`,`execution_context`,`results_are_published`)
 VALUES (611,4,'2017-10-09 17:23:58','2017-10-12 08:01:17',1,359,382,618,1712,'show','FaceToFace',1),
 	(615,3,'2017-10-09 17:38:16','2017-10-10 08:54:53',5,359,382,622,1688,'show','Blended',1);
@@ -37,18 +37,18 @@ VALUES (7893,0,'2017-10-12 07:52:29','2017-10-12 07:52:29',359,1712,'[2,3,6]',NU
 	(11774,0,'2017-12-13 20:28:15','2017-12-13 20:28:15',300,1688,'[1]',NULL,2,100,2,NULL),
 	(11777,0,'2017-12-13 21:07:04','2017-12-13 21:07:04',359,1688,'[2]','<p>La plupart du temps il est utilie de partager le .gitignore avec les autres développeur</p>',0,0,1,NULL),
 	(11778,0,'2017-12-13 21:08:59','2017-12-13 21:08:59',359,1688,'[1]',NULL,1,100,2,NULL);
-	
+
 INSERT INTO `attachement` (`id`,`version`,`path`,`name`,`original_name`,`size`,`dimension_height`,`dimension_width`,`type_mime`,`note_id`,`context_id`,`to_delete`,`statement_id`)
 VALUES (1,1,'C:/testPath/test.png','test',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(2,1,'C:/testPath/test2.png','test2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-	
+
 INSERT INTO `peer_grading` (`id`,`version`,`date_created`,`last_updated`,`grade`,`annotation`,`grader_id`,`response_id`)
 VALUES (15,1,'2017-12-13 20:27:20','2017-12-13 20:27:20',4.5,'peergrading1',359,7893),
 	(16,1,'2017-12-13 21:07:04','2017-12-13 21:07:04',5.0,'peergrading2',359,11777);
-	
+
 INSERT INTO `learner_sequence` (`id`,`version`,`date_created`,`last_updated`,`learner_id`,`sequence_id`,`active_interaction_id`,`state`)
 VALUES (1,1,'2017-10-12 07:52:29','2017-10-12 07:52:29',359,611,1712,100),
 	(2,1,'2017-10-11 14:09:53','2017-10-12 06:44:51',359,615,1688,100);
-	
+
 ALTER TABLE `peer_grading`
-	DROP FOREIGN KEY `fk_peer_grading_response_id`;	
+	DROP FOREIGN KEY `fk_peer_grading_response_id`;
