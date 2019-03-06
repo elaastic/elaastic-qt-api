@@ -1,6 +1,8 @@
 package org.elaastic.qtapi.controlleur;
 
+import org.elaastic.qtapi.entities.Assignment;
 import org.elaastic.qtapi.entities.Sequence;
+import org.elaastic.qtapi.entities.Statement;
 import org.elaastic.qtapi.services.EntitiesServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +23,19 @@ public class ElaasticMyTestController {
         this.entitiesServices = entitiesServices;
     }
 
-    @RequestMapping("/questions")
+    @RequestMapping("/sequences")
     public List<Sequence> findAllSequence() {
         return entitiesServices.findAllSequence();
     }
+
+    @RequestMapping("/statement")
+    public List<Statement> findAllStatement() {
+        return entitiesServices.findAllSequence();
+    }
+
+    @RequestMapping("/assigements")
+    public List<Assignment> findAllAssigements() {
+        return entitiesServices.findAllSequence();
+    }
+
 }
