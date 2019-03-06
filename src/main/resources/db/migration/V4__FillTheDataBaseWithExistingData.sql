@@ -54,4 +54,3 @@ VALUES (1,1,'2017-10-12 07:52:29','2017-10-12 07:52:29',359,611,1712,100),
 
 ALTER TABLE `peer_grading`
 	DROP FOREIGN KEY `fk_peer_grading_response_id`;
-
