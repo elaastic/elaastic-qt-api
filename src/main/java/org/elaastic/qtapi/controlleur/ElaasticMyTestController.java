@@ -30,12 +30,12 @@ public class ElaasticMyTestController {
 
     @RequestMapping("/statement")
     public List<Statement> findAllStatement() {
-        return entitiesServices.findAllSequence();
+        return entitiesServices.findAllStatement();
     }
 
     @RequestMapping("/assigements")
     public List<Assignment> findAllAssigements() {
-        return entitiesServices.findAllSequence();
+        return entitiesServices.findAllAssignments();
     }
 
 }
